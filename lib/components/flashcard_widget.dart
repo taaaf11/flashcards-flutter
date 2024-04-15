@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flashcards/models/flashcard.dart';
 
 // TODO: Add longPress function for supplying editing and deletion commands
-
 class FlashCardWidget extends StatelessWidget {
   final FlashCard flashCard;
 

@@ -87,7 +87,8 @@ class _AddFlashCardDialogState extends State<AddFlashCardDialog> {
                           style: Theme.of(context)
                               .textTheme
                               .titleMedium
-                              ?.copyWith(fontWeight: FontWeight.w800)),
+                              ?.copyWith(
+                                  fontSize: 18, fontWeight: FontWeight.bold)),
                     ),
                     SizedBox(
                       width: 110,
@@ -126,9 +127,9 @@ class _AddFlashCardDialogState extends State<AddFlashCardDialog> {
               )
             ],
             selected: <CardType>{cardType},
-            selectedIcon: Icon(cardType == CardType.qa
-                ? Icons.question_mark_rounded
-                : Icons.lightbulb_outline_rounded),
+            // selectedIcon: Icon(cardType == CardType.qa
+            //     ? Icons.question_mark_rounded
+            //     : Icons.lightbulb_outline_rounded),
             onSelectionChanged: (Set<CardType> newSelection) {
               setState(() {
                 // _textKey.currentWidget?.animate().scale(end: Offset(9, 8));
