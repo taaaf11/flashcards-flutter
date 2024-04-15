@@ -14,25 +14,25 @@ class AddFlashCardDialog extends StatefulWidget {
 }
 
 class _AddFlashCardDialogState extends State<AddFlashCardDialog> {
-  late TextEditingController _titleEditingController;
-  late TextEditingController _questionEditingController;
-  late TextEditingController _answerEditingController;
+  // late TextEditingController _titleEditingController;
+  late TextEditingController _backTextEditingController;
+  late TextEditingController _frontTextEditingController;
   double _difficultyLevel = 1; // easy
 
   @override
   void initState() {
-    _titleEditingController = TextEditingController();
-    _questionEditingController = TextEditingController();
-    _answerEditingController = TextEditingController();
+    // _titleEditingController = TextEditingController();
+    _backTextEditingController = TextEditingController();
+    _frontTextEditingController = TextEditingController();
 
     super.initState();
   }
 
   @override
   void dispose() {
-    _titleEditingController.dispose();
-    _questionEditingController.dispose();
-    _answerEditingController.dispose();
+    // _titleEditingController.dispose();
+    _backTextEditingController.dispose();
+    _frontTextEditingController.dispose();
 
     super.dispose();
   }
@@ -48,22 +48,6 @@ class _AddFlashCardDialogState extends State<AddFlashCardDialog> {
           Row(
             children: [
               const Expanded(
-                child: Text('Title:',
-                    style:
-                        TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-              ),
-              SizedBox(
-                width: 110,
-                child: TextField(
-                  controller: _titleEditingController,
-                  maxLength: 255,
-                ),
-              ),
-            ],
-          ),
-          Row(
-            children: [
-              const Expanded(
                 child: Text('Question:',
                     style:
                         TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
@@ -71,7 +55,7 @@ class _AddFlashCardDialogState extends State<AddFlashCardDialog> {
               SizedBox(
                 width: 110,
                 child: TextField(
-                  controller: _questionEditingController,
+                  controller: _backTextEditingController,
                   maxLength: 255,
                 ),
               ),
@@ -87,7 +71,7 @@ class _AddFlashCardDialogState extends State<AddFlashCardDialog> {
               SizedBox(
                   width: 110,
                   child: TextField(
-                      controller: _answerEditingController, maxLength: 255)),
+                      controller: _frontTextEditingController, maxLength: 255)),
             ],
           ),
           Row(children: [
@@ -121,18 +105,16 @@ class _AddFlashCardDialogState extends State<AddFlashCardDialog> {
           icon: const Icon(Icons.check),
           onPressed: () {
             setState(() {
-              if (_titleEditingController.text == '' &&
-                  _questionEditingController.text == '' &&
-                  _answerEditingController.text == '') {
+              if (_backTextEditingController.text == '' &&
+                  _frontTextEditingController.text == '') {
                 Navigator.of(context).pop();
                 return;
               }
 
               FlashCard flashCard = FlashCard(
                 timeOfCreation: DateTime.now().toIso8601String(),
-                title: _titleEditingController.text,
-                question: _questionEditingController.text,
-                answer: _answerEditingController.text,
+                frontText: _frontTextEditingController.text,
+                backText: _backTextEditingController.text,
                 difficulty: _difficultyLevel,
               );
 

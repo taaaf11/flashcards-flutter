@@ -1,33 +1,33 @@
 class FlashCard {
   FlashCard({
     required this.timeOfCreation,
-    required this.title,
-    required this.question,
-    required this.answer,
+    // required this.title,
+    required this.frontText,
+    this.backText,
     required this.difficulty,
   });
 
   String timeOfCreation;
-  String title;
-  String question;
-  String answer;
+  // String title;
+  String frontText; // previously: question
+  String? backText; // previously: answer
   double difficulty;
 
   factory FlashCard.fromMap(Map<String, dynamic> map) {
     return FlashCard(
       timeOfCreation: map['timeOfCreation'] as String,
-      title: map['title'] as String,
-      question: map['question'] as String,
-      answer: map['answer'] as String,
+      // title: map['title'] as String,
+      frontText: map['frontText'] as String,
+      backText: map['answer'] as String?,
       difficulty: map['difficulty'] as double,
     );
   }
 
-  Map<String, Object> toMap() => {
+  Map<String, Object?> toMap() => {
         'timeOfCreation': timeOfCreation,
-        'title': title,
-        'question': question,
-        'answer': answer,
+        // 'title': title,
+        'frontText': frontText,
+        'backText': backText,
         'difficulty': difficulty,
       };
 
@@ -36,9 +36,9 @@ class FlashCard {
   @override
   String toString() {
     return 'FlashCard{timeOfCreation: $timeOfCreation, '
-        'title: $title, '
-        'question: $question, '
-        'answer: $answer, '
+        // 'title: $title, '
+        'frontText: $frontText, '
+        'backText: $backText, '
         'difficulty: $difficulty}';
   }
 }

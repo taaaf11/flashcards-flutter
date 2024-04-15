@@ -14,11 +14,10 @@ class FlashCardWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        // color: Theme.of(context).colorScheme.surfaceVariant,
         color: switch (flashCard.difficulty) {
-          1 => kPrimaryColor.withOpacity(0.37),
-          2 => Colors.orange.withAlpha(75),
-          3 => Colors.red.withOpacity(0.37),
+          1 => kPrimaryColor.withAlpha(58),
+          2 => Colors.orange.withAlpha(58),
+          3 => Colors.red.withAlpha(58),
           _ => Colors.transparent
         },
         borderRadius: BorderRadius.circular(10),
@@ -28,6 +27,7 @@ class FlashCardWidget extends StatelessWidget {
         color: Colors.transparent,
         child: InkWell(
           onTap: () {
+            if (flashCard.backText == null) return;
             showDialog(
               context: context,
               builder: (context) {
@@ -38,12 +38,13 @@ class FlashCardWidget extends StatelessWidget {
                     style: TextStyle(fontWeight: FontWeight.w400),
                   ),
                   content: Text(
-                    flashCard.answer,
+                    flashCard.backText!,
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                        color: kPrimaryColor.withOpacity(0.9),
-                        fontSize: 22,
-                        fontWeight: FontWeight.w400),
+                      color: kPrimaryColor.withOpacity(0.9),
+                      fontSize: 22,
+                      fontWeight: FontWeight.w400,
+                    ),
                   ),
                 );
               },
@@ -56,33 +57,19 @@ class FlashCardWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 const SizedBox.shrink(),
-                Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                      flashCard.title,
-                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                          color: Theme.of(context).colorScheme.secondary),
-                    ),
-                    Text(
-                      flashCard.question,
-                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                          color: Colors.white, fontWeight: FontWeight.w500),
-                    )
-                  ],
+                Text(
+                  flashCard.frontText,
+                  style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                      color: Theme.of(context).colorScheme.onSurface,
+                      fontWeight: FontWeight.bold),
                 ),
-                Column(
-                  children: [
-                    IconButton(
-                      icon: const Icon(Icons.delete_outline_rounded, size: 16),
-                      onPressed: () {
-                        FlashCardsRepository.removeFlashCard(flashCard);
-                        Provider.of<FlashCardsListProvider>(context,
-                                listen: false)
-                            .remove(flashCard);
-                      },
-                    ),
-                  ],
+                IconButton(
+                  icon: const Icon(Icons.delete_outline_rounded, size: 16),
+                  onPressed: () {
+                    FlashCardsRepository.removeFlashCard(flashCard);
+                    Provider.of<FlashCardsListProvider>(context, listen: false)
+                        .remove(flashCard);
+                  },
                 )
               ],
             ),
