@@ -17,6 +17,7 @@ class _AddFlashCardDialogState extends State<AddFlashCardDialog> {
   late TextEditingController _titleEditingController;
   late TextEditingController _questionEditingController;
   late TextEditingController _answerEditingController;
+  double _difficultyLevel = 1; // easy
 
   @override
   void initState() {
@@ -52,11 +53,12 @@ class _AddFlashCardDialogState extends State<AddFlashCardDialog> {
                         TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
               ),
               SizedBox(
-                  width: 110,
-                  child: TextField(
-                    controller: _titleEditingController,
-                    maxLength: 255,
-                  )),
+                width: 110,
+                child: TextField(
+                  controller: _titleEditingController,
+                  maxLength: 255,
+                ),
+              ),
             ],
           ),
           Row(
@@ -88,6 +90,30 @@ class _AddFlashCardDialogState extends State<AddFlashCardDialog> {
                       controller: _answerEditingController, maxLength: 255)),
             ],
           ),
+          Row(children: [
+            Text('Difficulty:',
+                style: Theme.of(context)
+                    .textTheme
+                    .titleMedium
+                    ?.copyWith(fontWeight: FontWeight.w800)),
+            Slider(
+              onChanged: (double? value) {
+                setState(() {
+                  _difficultyLevel = value!;
+                });
+              },
+              value: _difficultyLevel,
+              min: 1,
+              max: 3,
+              label: switch (_difficultyLevel) {
+                1 => 'Easy',
+                2 => 'Medium',
+                3 => 'Hard',
+                _ => ''
+              },
+              divisions: 2,
+            )
+          ])
         ],
       ),
       actions: [
