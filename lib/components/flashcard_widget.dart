@@ -50,7 +50,7 @@ class FlashCardWidget extends StatelessWidget {
                       fontWeight: FontWeight.bold),
                 ),
                 IconButton(
-                  icon: const Icon(Icons.delete_outline_rounded, size: 16),
+                  icon: const Icon(Icons.delete_outline_rounded, size: 20),
                   onPressed: () {
                     FlashCardsRepository.removeFlashCard(flashCard);
                     Provider.of<FlashCardsListProvider>(context, listen: false)

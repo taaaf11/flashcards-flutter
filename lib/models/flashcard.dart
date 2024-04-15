@@ -18,7 +18,7 @@ class FlashCard {
       timeOfCreation: map['timeOfCreation'] as String,
       // title: map['title'] as String,
       frontText: map['frontText'] as String,
-      backText: map['answer'] as String?,
+      backText: map['backText'] as String?,
       difficulty: map['difficulty'] as double,
     );
   }

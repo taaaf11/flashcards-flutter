@@ -4,7 +4,7 @@ import 'package:flashcards/models/flashcard.dart';
 import 'package:flashcards/flashcard_repository/flashcard_repository.dart';
 import 'package:provider/provider.dart';
 
-enum Difficulty { easy, medium, hard }
+enum CardType { idea, qa } // TODO: Change the name of enum!!
 
 class AddFlashCardDialog extends StatefulWidget {
   const AddFlashCardDialog({super.key});
@@ -18,6 +18,8 @@ class _AddFlashCardDialogState extends State<AddFlashCardDialog> {
   late TextEditingController _backTextEditingController;
   late TextEditingController _frontTextEditingController;
   double _difficultyLevel = 1; // easy
+
+  CardType cardType = CardType.idea;
 
   @override
   void initState() {
@@ -47,32 +49,55 @@ class _AddFlashCardDialogState extends State<AddFlashCardDialog> {
         children: [
           Row(
             children: [
-              const Expanded(
-                child: Text('Question:',
-                    style:
-                        TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+              Expanded(
+                child: Text(cardType == CardType.idea ? 'Idea:' : 'Question',
+                    style: const TextStyle(
+                        fontSize: 18, fontWeight: FontWeight.bold)),
               ),
               SizedBox(
                 width: 110,
                 child: TextField(
-                  controller: _backTextEditingController,
+                  controller: _frontTextEditingController,
                   maxLength: 255,
                 ),
               ),
             ],
           ),
-          Row(
-            children: [
-              const Expanded(
-                child: Text('Answer:',
-                    style:
-                        TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+          cardType == CardType.qa
+              ? Row(
+                  children: [
+                    const Expanded(
+                      child: Text('Answer:',
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.bold)),
+                    ),
+                    SizedBox(
+                        width: 110,
+                        child: TextField(
+                            controller: _backTextEditingController,
+                            maxLength: 255)),
+                  ],
+                )
+              : const SizedBox.shrink(),
+          SegmentedButton<CardType>(
+            segments: const <ButtonSegment<CardType>>[
+              ButtonSegment(
+                value: CardType.idea,
+                label: Text('Idea'),
+                icon: Icon(Icons.lightbulb_outline_rounded),
               ),
-              SizedBox(
-                  width: 110,
-                  child: TextField(
-                      controller: _frontTextEditingController, maxLength: 255)),
+              ButtonSegment(
+                value: CardType.qa,
+                label: Text('Q/A'),
+                icon: Icon(Icons.question_mark_outlined),
+              )
             ],
+            selected: <CardType>{cardType},
+            onSelectionChanged: (Set<CardType> newSelection) {
+              setState(() {
+                cardType = newSelection.first;
+              });
+            },
           ),
           Row(children: [
             Text('Difficulty:',
@@ -114,7 +139,9 @@ class _AddFlashCardDialogState extends State<AddFlashCardDialog> {
               FlashCard flashCard = FlashCard(
                 timeOfCreation: DateTime.now().toIso8601String(),
                 frontText: _frontTextEditingController.text,
-                backText: _backTextEditingController.text,
+                backText: cardType == CardType.qa
+                    ? _backTextEditingController.text
+                    : null,
                 difficulty: _difficultyLevel,
               );
 
