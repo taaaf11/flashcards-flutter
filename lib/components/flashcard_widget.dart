@@ -1,10 +1,9 @@
 import 'package:flashcards/components/back_text_dialog.dart';
 import 'package:flashcards/constants.dart';
-import 'package:flashcards/flashcard_repository/flashcard_repository.dart';
-import 'package:flashcards/notifiers/flashcards_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flashcards/models/flashcard.dart';
-import 'package:provider/provider.dart';
+
+// TODO: Add longPress function for supplying editing and deletion commands
 
 class FlashCardWidget extends StatelessWidget {
   final FlashCard flashCard;
@@ -16,10 +15,11 @@ class FlashCardWidget extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: switch (flashCard.difficulty) {
-          1 => kPrimaryColor.withAlpha(58),
-          2 => Colors.orange.withAlpha(58),
-          3 => Colors.red.withAlpha(58),
-          _ => Colors.transparent
+          1 => kPrimaryColor.withAlpha(125),
+          2 => Colors.orange.withAlpha(125),
+          3 => Colors.red.withAlpha(125),
+          null => Colors.yellow.withAlpha(125),
+          _ => Colors.transparent,
         },
         borderRadius: BorderRadius.circular(10),
       ),
@@ -27,6 +27,8 @@ class FlashCardWidget extends StatelessWidget {
       child: Material(
         color: Colors.transparent,
         child: InkWell(
+          hoverDuration: const Duration(milliseconds: 20),
+          splashColor: Theme.of(context).splashColor.withOpacity(0.1),
           onTap: () {
             if (flashCard.backText == null) return;
             showDialog(
@@ -38,26 +40,27 @@ class FlashCardWidget extends StatelessWidget {
           },
           borderRadius: BorderRadius.circular(10),
           child: Container(
-            padding: const EdgeInsets.symmetric(vertical: 16),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const SizedBox.shrink(),
-                Text(
-                  flashCard.frontText,
-                  style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                      color: Theme.of(context).colorScheme.onSurface,
-                      fontWeight: FontWeight.bold),
-                ),
-                IconButton(
-                  icon: const Icon(Icons.delete_outline_rounded, size: 20),
-                  onPressed: () {
-                    FlashCardsRepository.removeFlashCard(flashCard);
-                    Provider.of<FlashCardsListProvider>(context, listen: false)
-                        .remove(flashCard);
-                  },
-                )
-              ],
+            padding: const EdgeInsets.symmetric(vertical: 25),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    flashCard.frontText,
+                    style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                          color: Theme.of(context).colorScheme.onSurface,
+                          fontWeight: FontWeight.w500,
+                        ),
+                  ),
+                  Icon(
+                    flashCard.difficulty != null
+                        ? Icons.question_mark_rounded
+                        : Icons.lightbulb_outline_rounded,
+                    size: 20,
+                  ),
+                ],
+              ),
             ),
           ),
         ),

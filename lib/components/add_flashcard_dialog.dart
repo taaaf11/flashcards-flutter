@@ -79,6 +79,39 @@ class _AddFlashCardDialogState extends State<AddFlashCardDialog> {
                   ],
                 )
               : const SizedBox.shrink(),
+          cardType == CardType.qa
+              ? Row(
+                  children: [
+                    Expanded(
+                      child: Text('Difficulty:',
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleMedium
+                              ?.copyWith(fontWeight: FontWeight.w800)),
+                    ),
+                    SizedBox(
+                      width: 110,
+                      child: Slider(
+                        onChanged: (double? value) {
+                          setState(() {
+                            _difficultyLevel = value!;
+                          });
+                        },
+                        value: _difficultyLevel,
+                        min: 1,
+                        max: 3,
+                        label: switch (_difficultyLevel) {
+                          1 => 'Easy',
+                          2 => 'Medium',
+                          3 => 'Hard',
+                          _ => ''
+                        },
+                        divisions: 2,
+                      ),
+                    )
+                  ],
+                )
+              : const SizedBox.shrink(),
           SegmentedButton<CardType>(
             segments: const <ButtonSegment<CardType>>[
               ButtonSegment(
@@ -93,36 +126,16 @@ class _AddFlashCardDialogState extends State<AddFlashCardDialog> {
               )
             ],
             selected: <CardType>{cardType},
+            selectedIcon: Icon(cardType == CardType.qa
+                ? Icons.question_mark_rounded
+                : Icons.lightbulb_outline_rounded),
             onSelectionChanged: (Set<CardType> newSelection) {
               setState(() {
+                // _textKey.currentWidget?.animate().scale(end: Offset(9, 8));
                 cardType = newSelection.first;
               });
             },
           ),
-          Row(children: [
-            Text('Difficulty:',
-                style: Theme.of(context)
-                    .textTheme
-                    .titleMedium
-                    ?.copyWith(fontWeight: FontWeight.w800)),
-            Slider(
-              onChanged: (double? value) {
-                setState(() {
-                  _difficultyLevel = value!;
-                });
-              },
-              value: _difficultyLevel,
-              min: 1,
-              max: 3,
-              label: switch (_difficultyLevel) {
-                1 => 'Easy',
-                2 => 'Medium',
-                3 => 'Hard',
-                _ => ''
-              },
-              divisions: 2,
-            )
-          ])
         ],
       ),
       actions: [
@@ -142,7 +155,7 @@ class _AddFlashCardDialogState extends State<AddFlashCardDialog> {
                 backText: cardType == CardType.qa
                     ? _backTextEditingController.text
                     : null,
-                difficulty: _difficultyLevel,
+                difficulty: cardType == CardType.qa ? _difficultyLevel : null,
               );
 
               FlashCardsRepository.insertFlashCard(flashCard);

@@ -4,14 +4,14 @@ class FlashCard {
     // required this.title,
     required this.frontText,
     this.backText,
-    required this.difficulty,
+    this.difficulty,
   });
 
   String timeOfCreation;
   // String title;
   String frontText; // previously: question
   String? backText; // previously: answer
-  double difficulty;
+  double? difficulty; // null when user selects an idea
 
   factory FlashCard.fromMap(Map<String, dynamic> map) {
     return FlashCard(
@@ -19,7 +19,7 @@ class FlashCard {
       // title: map['title'] as String,
       frontText: map['frontText'] as String,
       backText: map['backText'] as String?,
-      difficulty: map['difficulty'] as double,
+      difficulty: map['difficulty'] as double?,
     );
   }
 
