@@ -1,3 +1,4 @@
+import 'package:flashcards/components/back_text_dialog.dart';
 import 'package:flashcards/constants.dart';
 import 'package:flashcards/flashcard_repository/flashcard_repository.dart';
 import 'package:flashcards/notifiers/flashcards_notifier.dart';
@@ -31,22 +32,7 @@ class FlashCardWidget extends StatelessWidget {
             showDialog(
               context: context,
               builder: (context) {
-                return AlertDialog(
-                  title: const Text(
-                    'The Answer is:',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontWeight: FontWeight.w400),
-                  ),
-                  content: Text(
-                    flashCard.backText!,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: kPrimaryColor.withOpacity(0.9),
-                      fontSize: 22,
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ),
-                );
+                return BackTextDialog(flashCard: flashCard);
               },
             );
           },
