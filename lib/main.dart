@@ -29,7 +29,10 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'FlashCards',
         theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: kPrimaryColor),
+          colorScheme: ColorScheme.fromSeed(
+            seedColor: kPrimaryColor,
+            // brightness: Brightness.dark,
+          ),
           // fontFamily: 'OpenSans-Regular',
           useMaterial3: true,
         ),
@@ -93,10 +96,7 @@ class _MyHomePageState extends State<MyHomePage> {
       floatingActionButton: FloatingActionButton(
         onPressed: _showAddFlashCardDialog,
         tooltip: 'Add flashcard',
-        child: Icon(
-          Icons.add,
-          color: kPrimaryColor.withAlpha(50),
-        ),
+        child: const Icon(Icons.add, color: kPrimaryColor),
       ),
     );
   }

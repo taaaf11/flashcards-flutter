@@ -14,7 +14,13 @@ class FlashCardWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.surfaceVariant,
+        // color: Theme.of(context).colorScheme.surfaceVariant,
+        color: switch (flashCard.difficulty) {
+          1 => kPrimaryColor.withOpacity(0.37),
+          2 => Colors.orange.withAlpha(75),
+          3 => Colors.red.withOpacity(0.37),
+          _ => Colors.transparent
+        },
         borderRadius: BorderRadius.circular(10),
       ),
       margin: const EdgeInsets.symmetric(horizontal: 20),
@@ -53,17 +59,15 @@ class FlashCardWidget extends StatelessWidget {
                 Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Text(flashCard.title,
-                        style: Theme.of(context)
-                            .textTheme
-                            .titleMedium
-                            ?.copyWith(
-                                color:
-                                    Theme.of(context).colorScheme.secondary)),
+                    Text(
+                      flashCard.title,
+                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                          color: Theme.of(context).colorScheme.secondary),
+                    ),
                     Text(
                       flashCard.question,
                       style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                          color: Colors.white, fontWeight: FontWeight.w100),
+                          color: Colors.white, fontWeight: FontWeight.w500),
                     )
                   ],
                 ),

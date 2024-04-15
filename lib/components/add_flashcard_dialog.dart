@@ -133,6 +133,7 @@ class _AddFlashCardDialogState extends State<AddFlashCardDialog> {
                 title: _titleEditingController.text,
                 question: _questionEditingController.text,
                 answer: _answerEditingController.text,
+                difficulty: _difficultyLevel,
               );
 
               FlashCardsRepository.insertFlashCard(flashCard);
