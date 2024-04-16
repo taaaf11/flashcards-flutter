@@ -1,0 +1,1 @@
+enum CardType { idea, qa } // TODO: Change the name of enum!!
