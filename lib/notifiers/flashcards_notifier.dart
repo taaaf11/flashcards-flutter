@@ -1,3 +1,4 @@
+import 'package:flashcards/flashcard_repository/flashcard_repository.dart';
 import 'package:flashcards/models/flashcard.dart';
 import 'package:flutter/material.dart';
 
@@ -10,11 +11,13 @@ class FlashCardsListProvider with ChangeNotifier {
 
   void add(FlashCard flashCard) {
     _flashCards.add(flashCard);
+    FlashCardsRepository.insertFlashCard(flashCard);
     notifyListeners();
   }
 
   void remove(FlashCard flashCard) {
     _flashCards.remove(flashCard);
+    FlashCardsRepository.removeFlashCard(flashCard);
     notifyListeners();
   }
 
