@@ -1,5 +1,4 @@
-bool isFrontTextBackTextNotEmpty(String frontText, String backText) =>
-    frontText.isNotEmpty && backText.isNotEmpty;
+bool isFrontTextNotEmpty(String frontText) => frontText.isNotEmpty;
 
 List<String> getTagsFromTagsString(String tagsString,
     {String delimeter = ','}) {
