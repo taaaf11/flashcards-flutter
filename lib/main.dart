@@ -66,32 +66,39 @@ class _MyHomePageState extends State<MyHomePage> {
   void _showAddFlashCardDialog() {
     if (kDebugMode && flashCardsListProvider.flashCards.isEmpty) {
       flashCardsListProvider.add(FlashCard(
-        timeOfCreation: "2024-04-16T19:37:53.603",
-        frontText: "asdfaqweqrw",
-        backText: null,
-        difficulty: null,
-        tags: ['qwer'],
-      ));
-      flashCardsListProvider.add(FlashCard(
-        timeOfCreation: "2024-04-16T19:45:41.944",
-        frontText: "Named",
-        backText: "cs",
-        difficulty: 2,
-        tags: [],
-      ));
-      flashCardsListProvider.add(FlashCard(
         timeOfCreation: "2024-04-16T19:46:03.908",
-        frontText: "Neutrons are?",
-        backText: "positively charged",
+        frontText: "Easy",
+        backText: "easy",
         difficulty: 1,
         tags: [],
       ));
       flashCardsListProvider.add(FlashCard(
+        timeOfCreation: "2024-04-16T19:45:41.944",
+        frontText: "Medium",
+        backText: "medium",
+        difficulty: 2,
+        tags: [],
+      ));
+      flashCardsListProvider.add(FlashCard(
         timeOfCreation: "2024-04-16T19:46:21.471",
-        frontText: "a",
-        backText: "b",
+        frontText: "Hard",
+        backText: "hard",
         difficulty: 3,
         tags: [],
+      ));
+      flashCardsListProvider.add(FlashCard(
+        timeOfCreation: "2024-04-16T19:46:21.471",
+        frontText: "Easy (but without answer i.e. backText)",
+        backText: null,
+        difficulty: 1,
+        tags: [],
+      ));
+      flashCardsListProvider.add(FlashCard(
+        timeOfCreation: "2024-04-16T19:37:53.603",
+        frontText: "Idea",
+        backText: null,
+        difficulty: null,
+        tags: ['idea', 'an idea'],
       ));
       return;
     }
