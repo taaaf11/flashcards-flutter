@@ -1,7 +1,7 @@
 import 'package:flashcards/notifiers/flashcards_notifier.dart';
+import 'package:flashcards/validations.dart';
 import 'package:flutter/material.dart';
 import 'package:flashcards/models/flashcard.dart';
-import 'package:flashcards/flashcard_repository/flashcard_repository.dart';
 import 'package:provider/provider.dart';
 
 enum CardType { idea, qa } // TODO: Change the name of enum!!
@@ -14,27 +14,27 @@ class AddFlashCardDialog extends StatefulWidget {
 }
 
 class _AddFlashCardDialogState extends State<AddFlashCardDialog> {
-  // late TextEditingController _titleEditingController;
   late TextEditingController _backTextEditingController;
   late TextEditingController _frontTextEditingController;
+  late TextEditingController _tagsTextEditingController;
   double _difficultyLevel = 1; // easy
 
   CardType cardType = CardType.idea;
 
   @override
   void initState() {
-    // _titleEditingController = TextEditingController();
     _backTextEditingController = TextEditingController();
     _frontTextEditingController = TextEditingController();
+    _tagsTextEditingController = TextEditingController();
 
     super.initState();
   }
 
   @override
   void dispose() {
-    // _titleEditingController.dispose();
     _backTextEditingController.dispose();
     _frontTextEditingController.dispose();
+    _tagsTextEditingController.dispose();
 
     super.dispose();
   }
@@ -50,45 +50,52 @@ class _AddFlashCardDialogState extends State<AddFlashCardDialog> {
           Row(
             children: [
               Expanded(
-                child: Text(cardType == CardType.idea ? 'Idea:' : 'Question',
-                    style: const TextStyle(
-                        fontSize: 18, fontWeight: FontWeight.bold)),
+                child: Text(
+                  cardType == CardType.idea ? 'Idea:' : 'Question',
+                  style: const TextStyle(
+                      fontSize: 18, fontWeight: FontWeight.bold),
+                ),
               ),
               SizedBox(
                 width: 110,
                 child: TextField(
                   controller: _frontTextEditingController,
-                  maxLength: 255,
+                  decoration: InputDecoration(border: UnderlineInputBorder()),
                 ),
               ),
             ],
           ),
+          SizedBox(height: 20),
           cardType == CardType.qa
               ? Row(
                   children: [
                     const Expanded(
-                      child: Text('Answer:',
-                          style: TextStyle(
-                              fontSize: 18, fontWeight: FontWeight.bold)),
+                      child: Text(
+                        'Answer:',
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold),
+                      ),
                     ),
                     SizedBox(
-                        width: 110,
-                        child: TextField(
-                            controller: _backTextEditingController,
-                            maxLength: 255)),
+                      width: 110,
+                      child: TextField(
+                        controller: _backTextEditingController,
+                      ),
+                    ),
                   ],
                 )
               : const SizedBox.shrink(),
+          cardType == CardType.qa ? SizedBox(height: 30) : SizedBox.shrink(),
           cardType == CardType.qa
               ? Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Expanded(
-                      child: Text('Difficulty:',
-                          style: Theme.of(context)
-                              .textTheme
-                              .titleMedium
-                              ?.copyWith(
-                                  fontSize: 18, fontWeight: FontWeight.bold)),
+                    Text(
+                      'Difficulty:',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                     SizedBox(
                       width: 110,
@@ -105,7 +112,7 @@ class _AddFlashCardDialogState extends State<AddFlashCardDialog> {
                           1 => 'Easy',
                           2 => 'Medium',
                           3 => 'Hard',
-                          _ => ''
+                          _ => null
                         },
                         divisions: 2,
                       ),
@@ -113,6 +120,24 @@ class _AddFlashCardDialogState extends State<AddFlashCardDialog> {
                   ],
                 )
               : const SizedBox.shrink(),
+          cardType == CardType.qa ? SizedBox(height: 20) : SizedBox.shrink(),
+          Row(
+            children: [
+              const Expanded(
+                child: Text(
+                  'Tags:',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+              ),
+              SizedBox(
+                width: 110,
+                child: TextField(
+                  controller: _tagsTextEditingController,
+                ),
+              ),
+            ],
+          ),
+          SizedBox(height: 20),
           SegmentedButton<CardType>(
             segments: const <ButtonSegment<CardType>>[
               ButtonSegment(
@@ -127,12 +152,8 @@ class _AddFlashCardDialogState extends State<AddFlashCardDialog> {
               )
             ],
             selected: <CardType>{cardType},
-            // selectedIcon: Icon(cardType == CardType.qa
-            //     ? Icons.question_mark_rounded
-            //     : Icons.lightbulb_outline_rounded),
             onSelectionChanged: (Set<CardType> newSelection) {
               setState(() {
-                // _textKey.currentWidget?.animate().scale(end: Offset(9, 8));
                 cardType = newSelection.first;
               });
             },
@@ -143,12 +164,17 @@ class _AddFlashCardDialogState extends State<AddFlashCardDialog> {
         IconButton(
           icon: const Icon(Icons.check),
           onPressed: () {
+            String frontText = _frontTextEditingController.text;
+            String backText = _backTextEditingController.text;
+            String tagsString = _tagsTextEditingController.text;
+
             setState(() {
-              if (_backTextEditingController.text == '' &&
-                  _frontTextEditingController.text == '') {
+              if (!isFrontTextBackTextNotEmpty(frontText, backText)) {
                 Navigator.of(context).pop();
                 return;
               }
+
+              List<String> tags = getTagsFromTagsString(tagsString);
 
               FlashCard flashCard = FlashCard(
                 timeOfCreation: DateTime.now().toIso8601String(),
@@ -157,9 +183,9 @@ class _AddFlashCardDialogState extends State<AddFlashCardDialog> {
                     ? _backTextEditingController.text
                     : null,
                 difficulty: cardType == CardType.qa ? _difficultyLevel : null,
+                tags: tags,
               );
 
-              FlashCardsRepository.insertFlashCard(flashCard);
               flashCardsState.add(flashCard);
 
               Navigator.of(context).pop();
