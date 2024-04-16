@@ -53,7 +53,7 @@ class _AddFlashCardDialogState extends State<AddFlashCardDialog> {
 
   @override
   Widget build(BuildContext context) {
-    var flashCardsState = Provider.of<FlashCardsListProvider>(context);
+    var flashCardsListState = Provider.of<FlashCardsListProvider>(context);
 
     return AlertDialog(
       content: Column(
@@ -180,8 +180,10 @@ class _AddFlashCardDialogState extends State<AddFlashCardDialog> {
             String backText = _backTextEditingController.text;
             String tagsString = _tagsTextEditingController.text;
 
+            // print('sldjkflsjflsj');
+
             setState(() {
-              if (!isFrontTextBackTextNotEmpty(frontText, backText)) {
+              if (!isFrontTextNotEmpty(frontText)) {
                 Navigator.of(context).pop();
                 return;
               }
@@ -190,15 +192,13 @@ class _AddFlashCardDialogState extends State<AddFlashCardDialog> {
 
               FlashCard flashCard = FlashCard(
                 timeOfCreation: DateTime.now().toIso8601String(),
-                frontText: _frontTextEditingController.text,
-                backText: cardType == CardType.qa
-                    ? _backTextEditingController.text
-                    : null,
+                frontText: frontText,
+                backText: cardType == CardType.qa ? backText : null,
                 difficulty: cardType == CardType.qa ? _difficultyLevel : null,
                 tags: tags,
               );
 
-              flashCardsState.add(flashCard);
+              flashCardsListState.add(flashCard);
 
               Navigator.of(context).pop();
             });

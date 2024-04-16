@@ -35,7 +35,7 @@ class FlashCardWidget extends StatelessWidget {
             showDialog(
               context: context,
               builder: (context) {
-                return BackTextDialog(flashCard: flashCard);
+                return FlashCardInfoDialog(flashCard: flashCard);
               },
             );
           },
@@ -49,39 +49,43 @@ class FlashCardWidget extends StatelessWidget {
           },
           borderRadius: BorderRadius.circular(10),
           child: Container(
+            // width: MediaQuery.of(context).size.width,
             padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 20),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Column(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      flashCard.frontText,
-                      style:
-                          Theme.of(context).textTheme.headlineLarge?.copyWith(
-                                fontFamily: 'Comfortaa',
-                                color: Theme.of(context).colorScheme.onSurface,
-                                fontWeight: FontWeight.w700,
-                              ),
-                    ),
-                    Visibility(
-                      visible: flashCard.tags.isNotEmpty,
-                      child: Column(
-                        children: [
-                          SizedBox(height: 5),
-                          Text(
-                            'tags: ${flashCard.tags.join(', ')}',
-                            style: TextStyle(
-                                fontFamily: 'Comfortaa',
-                                fontWeight: FontWeight.w500),
-                          ),
-                        ],
+                Flexible(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        flashCard.frontText,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                              fontFamily: 'Comfortaa',
+                              color: Theme.of(context).colorScheme.onSurface,
+                              fontWeight: FontWeight.w700,
+                            ),
                       ),
-                    )
-                  ],
+                      Visibility(
+                        visible: flashCard.tags.isNotEmpty,
+                        child: Column(
+                          children: [
+                            SizedBox(height: 5),
+                            Text(
+                              'tags: ${flashCard.tags.join(', ')}',
+                              style: TextStyle(
+                                  fontFamily: 'Comfortaa',
+                                  fontWeight: FontWeight.w500),
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
                 ),
                 Icon(
                   flashCard.difficulty != null
