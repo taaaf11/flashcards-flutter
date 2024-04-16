@@ -1,3 +1,4 @@
+import 'package:flashcards/components/add_flashcard_dialog.dart';
 import 'package:flashcards/models/flashcard.dart';
 import 'package:flashcards/notifiers/flashcards_notifier.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +18,22 @@ class ActionsDialog extends StatelessWidget {
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
+          IconTextButton(
+            icon: Icons.edit_rounded,
+            child: Text('Edit'),
+            onPress: () {
+              Navigator.of(context).pop();
+              showDialog(
+                context: context,
+                builder: (context) {
+                  return AddFlashCardDialog(
+                    editFlashCard: true,
+                    flashCardForEdit: flashCard,
+                  );
+                },
+              );
+            },
+          ),
           IconTextButton(
             icon: Icons.delete,
             child: Text('Delete'),

@@ -6,8 +6,12 @@ import 'package:provider/provider.dart';
 
 enum CardType { idea, qa } // TODO: Change the name of enum!!
 
+// ignore: must_be_immutable
 class AddFlashCardDialog extends StatefulWidget {
-  const AddFlashCardDialog({super.key});
+  bool? editFlashCard;
+  FlashCard? flashCardForEdit;
+
+  AddFlashCardDialog({super.key, this.editFlashCard, this.flashCardForEdit});
 
   @override
   State<AddFlashCardDialog> createState() => _AddFlashCardDialogState();
@@ -26,6 +30,14 @@ class _AddFlashCardDialogState extends State<AddFlashCardDialog> {
     _backTextEditingController = TextEditingController();
     _frontTextEditingController = TextEditingController();
     _tagsTextEditingController = TextEditingController();
+
+    if (widget.editFlashCard != null) {
+      assert(widget.flashCardForEdit != null,
+          'Flashcard is not provided for editing.');
+      _backTextEditingController.text = widget.flashCardForEdit!.backText ?? '';
+      _frontTextEditingController.text = widget.flashCardForEdit!.frontText;
+      _tagsTextEditingController.text = widget.flashCardForEdit!.tags.join(',');
+    }
 
     super.initState();
   }

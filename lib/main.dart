@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
           // fontFamily: 'OpenSans-Regular',
           useMaterial3: true,
         ),
-        home: const MyHomePage(title: 'Flutter Demo Home Page'),
+        home: const MyHomePage(title: 'Flashcards'),
       ),
     );
   }
@@ -98,7 +98,7 @@ class _MyHomePageState extends State<MyHomePage> {
     showDialog(
       context: context,
       builder: (context) {
-        return const AddFlashCardDialog();
+        return AddFlashCardDialog();
       },
     );
   }
