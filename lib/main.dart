@@ -1,7 +1,9 @@
 import 'package:flashcards/components/add_flashcard_dialog.dart';
 import 'package:flashcards/components/flashcard_widget.dart';
 import 'package:flashcards/constants.dart';
+import 'package:flashcards/models/flashcard.dart';
 import 'package:flashcards/notifiers/flashcards_notifier.dart';
+import 'package:flutter/foundation.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flashcards/flashcard_repository/flashcard_repository.dart';
@@ -52,15 +54,47 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  late FlashCardsListProvider flashCards;
+  late FlashCardsListProvider flashCardsListProvider;
 
   @override
   void initState() {
     super.initState();
-    flashCards = Provider.of<FlashCardsListProvider>(context, listen: false);
+    flashCardsListProvider =
+        Provider.of<FlashCardsListProvider>(context, listen: false);
   }
 
   void _showAddFlashCardDialog() {
+    if (kDebugMode && flashCardsListProvider.flashCards.isEmpty) {
+      flashCardsListProvider.add(FlashCard(
+        timeOfCreation: "2024-04-16T19:37:53.603",
+        frontText: "asdfaqweqrw",
+        backText: null,
+        difficulty: null,
+        tags: ['qwer'],
+      ));
+      flashCardsListProvider.add(FlashCard(
+        timeOfCreation: "2024-04-16T19:45:41.944",
+        frontText: "Named",
+        backText: "cs",
+        difficulty: 2,
+        tags: [],
+      ));
+      flashCardsListProvider.add(FlashCard(
+        timeOfCreation: "2024-04-16T19:46:03.908",
+        frontText: "Neutrons are?",
+        backText: "positively charged",
+        difficulty: 1,
+        tags: [],
+      ));
+      flashCardsListProvider.add(FlashCard(
+        timeOfCreation: "2024-04-16T19:46:21.471",
+        frontText: "a",
+        backText: "b",
+        difficulty: 3,
+        tags: [],
+      ));
+      return;
+    }
     showDialog(
       context: context,
       builder: (context) {
