@@ -13,7 +13,7 @@ class FlashCard {
   String timeOfCreation;
   String frontText; // previously: question
   String? backText; // previously: answer
-  double? difficulty; // null when user selects an idea
+  Difficulty? difficulty; // null when user selects an idea
   CardType type;
   List<String> tags;
 
@@ -22,7 +22,7 @@ class FlashCard {
       timeOfCreation: map['timeOfCreation'] as String,
       frontText: map['frontText'] as String,
       backText: map['backText'] as String?,
-      difficulty: map['difficulty'] as double?,
+      difficulty: map['difficulty'] as Difficulty?,
       type: map['type'] as CardType,
       tags: map['tags'] as List<String>,
     );

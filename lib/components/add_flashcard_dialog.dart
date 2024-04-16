@@ -20,7 +20,7 @@ class _AddFlashCardDialogState extends State<AddFlashCardDialog> {
   late TextEditingController _backTextEditingController;
   late TextEditingController _frontTextEditingController;
   late TextEditingController _tagsTextEditingController;
-  double _difficultyLevel = 1; // easy
+  Difficulty _difficultyLevel = Difficulty.easy; // easy
 
   CardType cardType = CardType.idea;
 
@@ -114,17 +114,22 @@ class _AddFlashCardDialogState extends State<AddFlashCardDialog> {
                       child: Slider(
                         onChanged: (double? value) {
                           setState(() {
-                            _difficultyLevel = value!;
+                            _difficultyLevel = switch (value) {
+                              1 => Difficulty.easy,
+                              2 => Difficulty.medium,
+                              3 => Difficulty.hard,
+                              _ => Difficulty.hard,
+                            };
                           });
                         },
-                        value: _difficultyLevel,
+                        value: _difficultyLevel.index + 1,
                         min: 1,
                         max: 3,
                         label: switch (_difficultyLevel) {
-                          1 => 'Easy',
-                          2 => 'Medium',
-                          3 => 'Hard',
-                          _ => null
+                          Difficulty.easy => 'Easy',
+                          Difficulty.medium => 'Medium',
+                          Difficulty.hard => 'Hard',
+                          // _ => null
                         },
                         divisions: 2,
                       ),

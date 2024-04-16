@@ -17,13 +17,12 @@ class FlashCardWidget extends StatelessWidget {
         color: switch (flashCard.type) {
           CardType.idea => const Color(0xffffef00).withAlpha(180),
           CardType.qa => switch (flashCard.difficulty) {
-              1 => kPrimaryColor.withAlpha(125),
+              Difficulty.easy => kPrimaryColor.withAlpha(125),
               // 2 => Colors.orange.withAlpha(125),
-              2 => const Color(0xffffe5b4),
-              3 => Colors.red.withAlpha(125),
-              null => const Color(0xffffef00).withAlpha(180),
+              Difficulty.medium => const Color(0xffffe5b4),
+              Difficulty.hard => Colors.red.withAlpha(125),
               // null => Colors.yellow.withAlpha(125),
-              _ => Colors.transparent,
+              _ => const Color(0xffffef00).withAlpha(180),
             },
         },
         borderRadius: BorderRadius.circular(10),

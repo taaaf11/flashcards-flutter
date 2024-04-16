@@ -13,6 +13,11 @@ import 'package:provider/provider.dart';
 
 void main() async {
   await Hive.initFlutter('flashcards_dir');
+
+  Hive
+    ..registerAdapter(CardTypeAdapter())
+    ..registerAdapter(DifficultyAdapter());
+
   await Hive.openBox('Flashcards');
 
   FlashCardsRepository.initialize();
@@ -70,7 +75,7 @@ class _MyHomePageState extends State<MyHomePage> {
         timeOfCreation: "2024-04-16T19:46:03.908",
         frontText: "Easy",
         backText: "easy",
-        difficulty: 1,
+        difficulty: Difficulty.easy,
         type: CardType.qa,
         tags: [],
       ));
@@ -78,7 +83,7 @@ class _MyHomePageState extends State<MyHomePage> {
         timeOfCreation: "2024-04-16T19:45:41.944",
         frontText: "Medium",
         backText: "medium",
-        difficulty: 2,
+        difficulty: Difficulty.medium,
         type: CardType.qa,
         tags: [],
       ));
@@ -86,7 +91,7 @@ class _MyHomePageState extends State<MyHomePage> {
         timeOfCreation: "2024-04-16T19:46:21.471",
         frontText: "Hard",
         backText: "hard",
-        difficulty: 3,
+        difficulty: Difficulty.hard,
         type: CardType.qa,
         tags: [],
       ));
@@ -94,7 +99,7 @@ class _MyHomePageState extends State<MyHomePage> {
         timeOfCreation: "2024-04-16T19:46:21.471",
         frontText: "Easy (but without answer i.e. backText)",
         backText: null,
-        difficulty: 1,
+        difficulty: Difficulty.easy,
         type: CardType.qa,
         tags: [],
       ));
