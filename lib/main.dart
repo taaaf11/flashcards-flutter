@@ -35,7 +35,7 @@ class MyApp extends StatelessWidget {
             seedColor: kPrimaryColor,
             // brightness: Brightness.dark,
           ),
-          // fontFamily: 'OpenSans-Regular',
+          fontFamily: 'Comfortaa',
           useMaterial3: true,
         ),
         home: const MyHomePage(title: 'Flashcards'),
