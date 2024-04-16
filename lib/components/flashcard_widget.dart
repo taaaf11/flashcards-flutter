@@ -1,6 +1,7 @@
 import 'package:flashcards/components/actions_dialog.dart';
 import 'package:flashcards/components/back_text_dialog.dart';
 import 'package:flashcards/constants.dart';
+import 'package:flashcards/types.dart';
 import 'package:flutter/material.dart';
 import 'package:flashcards/models/flashcard.dart';
 
@@ -13,14 +14,17 @@ class FlashCardWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: switch (flashCard.difficulty) {
-          1 => kPrimaryColor.withAlpha(125),
-          // 2 => Colors.orange.withAlpha(125),
-          2 => const Color(0xffffe5b4),
-          3 => Colors.red.withAlpha(125),
-          null => const Color(0xffffef00).withAlpha(180),
-          // null => Colors.yellow.withAlpha(125),
-          _ => Colors.transparent,
+        color: switch (flashCard.type) {
+          CardType.idea => const Color(0xffffef00).withAlpha(180),
+          CardType.qa => switch (flashCard.difficulty) {
+              1 => kPrimaryColor.withAlpha(125),
+              // 2 => Colors.orange.withAlpha(125),
+              2 => const Color(0xffffe5b4),
+              3 => Colors.red.withAlpha(125),
+              null => const Color(0xffffef00).withAlpha(180),
+              // null => Colors.yellow.withAlpha(125),
+              _ => Colors.transparent,
+            },
         },
         borderRadius: BorderRadius.circular(10),
       ),

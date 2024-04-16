@@ -1,9 +1,12 @@
+import 'package:flashcards/types.dart';
+
 class FlashCard {
   FlashCard({
     required this.timeOfCreation,
     required this.frontText,
     this.backText,
     this.difficulty,
+    required this.type,
     required this.tags,
   });
 
@@ -11,6 +14,7 @@ class FlashCard {
   String frontText; // previously: question
   String? backText; // previously: answer
   double? difficulty; // null when user selects an idea
+  CardType type;
   List<String> tags;
 
   factory FlashCard.fromMap(Map<String, dynamic> map) {
@@ -19,6 +23,7 @@ class FlashCard {
       frontText: map['frontText'] as String,
       backText: map['backText'] as String?,
       difficulty: map['difficulty'] as double?,
+      type: map['type'] as CardType,
       tags: map['tags'] as List<String>,
     );
   }
@@ -28,6 +33,7 @@ class FlashCard {
         'frontText': frontText,
         'backText': backText,
         'difficulty': difficulty,
+        'type': CardType,
         'tags': tags,
       };
 
@@ -39,6 +45,7 @@ class FlashCard {
         'frontText: "$frontText", '
         'backText: ${backText == null ? null : "\"$backText\""}, '
         'difficulty: $difficulty, '
+        'type: $type, '
         'tags: $tags,'
         ')';
   }

@@ -1,10 +1,9 @@
 import 'package:flashcards/notifiers/flashcards_notifier.dart';
+import 'package:flashcards/types.dart';
 import 'package:flashcards/validations.dart';
 import 'package:flutter/material.dart';
 import 'package:flashcards/models/flashcard.dart';
 import 'package:provider/provider.dart';
-
-enum CardType { idea, qa } // TODO: Change the name of enum!!
 
 // ignore: must_be_immutable
 class AddFlashCardDialog extends StatefulWidget {
@@ -198,6 +197,7 @@ class _AddFlashCardDialogState extends State<AddFlashCardDialog> {
                 frontText: frontText,
                 backText: cardType == CardType.qa ? backText : null,
                 difficulty: cardType == CardType.qa ? _difficultyLevel : null,
+                type: cardType,
                 tags: tags,
               );
 

@@ -3,6 +3,7 @@ import 'package:flashcards/components/flashcard_widget.dart';
 import 'package:flashcards/constants.dart';
 import 'package:flashcards/models/flashcard.dart';
 import 'package:flashcards/notifiers/flashcards_notifier.dart';
+import 'package:flashcards/types.dart';
 import 'package:flutter/foundation.dart';
 
 import 'package:flutter/material.dart';
@@ -70,6 +71,7 @@ class _MyHomePageState extends State<MyHomePage> {
         frontText: "Easy",
         backText: "easy",
         difficulty: 1,
+        type: CardType.qa,
         tags: [],
       ));
       flashCardsListProvider.add(FlashCard(
@@ -77,6 +79,7 @@ class _MyHomePageState extends State<MyHomePage> {
         frontText: "Medium",
         backText: "medium",
         difficulty: 2,
+        type: CardType.qa,
         tags: [],
       ));
       flashCardsListProvider.add(FlashCard(
@@ -84,6 +87,7 @@ class _MyHomePageState extends State<MyHomePage> {
         frontText: "Hard",
         backText: "hard",
         difficulty: 3,
+        type: CardType.qa,
         tags: [],
       ));
       flashCardsListProvider.add(FlashCard(
@@ -91,6 +95,7 @@ class _MyHomePageState extends State<MyHomePage> {
         frontText: "Easy (but without answer i.e. backText)",
         backText: null,
         difficulty: 1,
+        type: CardType.qa,
         tags: [],
       ));
       flashCardsListProvider.add(FlashCard(
@@ -98,6 +103,7 @@ class _MyHomePageState extends State<MyHomePage> {
         frontText: "Idea",
         backText: null,
         difficulty: null,
+        type: CardType.idea,
         tags: ['idea', 'an idea'],
       ));
       return;
