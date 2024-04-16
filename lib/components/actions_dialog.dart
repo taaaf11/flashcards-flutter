@@ -20,7 +20,7 @@ class ActionsDialog extends StatelessWidget {
         children: [
           IconTextButton(
             icon: Icons.edit_rounded,
-            child: Text('Edit'),
+            child: const Text('Edit'),
             onPress: () {
               Navigator.of(context).pop();
               showDialog(
@@ -36,7 +36,7 @@ class ActionsDialog extends StatelessWidget {
           ),
           IconTextButton(
             icon: Icons.delete,
-            child: Text('Delete'),
+            child: const Text('Delete'),
             onPress: () {
               flashCardsListProvider.remove(flashCard);
               Navigator.of(context).pop();

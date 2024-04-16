@@ -116,13 +116,13 @@ class _MyHomePageState extends State<MyHomePage> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
       ),
       body: Column(
         children: [
           Expanded(
             child: ListView.separated(
+              padding: const EdgeInsets.symmetric(vertical: 18),
               itemCount: flashCardsState.flashCards.length,
               itemBuilder: (context, index) {
                 return FlashCardWidget(

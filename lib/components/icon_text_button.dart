@@ -19,7 +19,7 @@ class IconTextButton extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 12),
         child: Row(
-          children: [Icon(icon), child, Spacer()],
+          children: [Icon(icon), child, const Spacer()],
         ),
       ),
     );

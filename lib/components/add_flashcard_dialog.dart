@@ -72,12 +72,11 @@ class _AddFlashCardDialogState extends State<AddFlashCardDialog> {
                 width: 110,
                 child: TextField(
                   controller: _frontTextEditingController,
-                  decoration: InputDecoration(border: UnderlineInputBorder()),
                 ),
               ),
             ],
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           cardType == CardType.qa
               ? Row(
                   children: [
@@ -97,12 +96,14 @@ class _AddFlashCardDialogState extends State<AddFlashCardDialog> {
                   ],
                 )
               : const SizedBox.shrink(),
-          cardType == CardType.qa ? SizedBox(height: 30) : SizedBox.shrink(),
+          cardType == CardType.qa
+              ? const SizedBox(height: 30)
+              : const SizedBox.shrink(),
           cardType == CardType.qa
               ? Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
+                    const Text(
                       'Difficulty:',
                       style: TextStyle(
                         fontSize: 18,
@@ -132,7 +133,9 @@ class _AddFlashCardDialogState extends State<AddFlashCardDialog> {
                   ],
                 )
               : const SizedBox.shrink(),
-          cardType == CardType.qa ? SizedBox(height: 20) : SizedBox.shrink(),
+          cardType == CardType.qa
+              ? const SizedBox(height: 20)
+              : const SizedBox.shrink(),
           Row(
             children: [
               const Expanded(
@@ -149,7 +152,7 @@ class _AddFlashCardDialogState extends State<AddFlashCardDialog> {
               ),
             ],
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           SegmentedButton<CardType>(
             segments: const <ButtonSegment<CardType>>[
               ButtonSegment(

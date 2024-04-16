@@ -16,9 +16,9 @@ class FlashCardWidget extends StatelessWidget {
         color: switch (flashCard.difficulty) {
           1 => kPrimaryColor.withAlpha(125),
           // 2 => Colors.orange.withAlpha(125),
-          2 => Color(0xffffe5b4),
+          2 => const Color(0xffffe5b4),
           3 => Colors.red.withAlpha(125),
-          null => Color(0xffffef00).withAlpha(180),
+          null => const Color(0xffffef00).withAlpha(180),
           // null => Colors.yellow.withAlpha(125),
           _ => Colors.transparent,
         },
@@ -49,7 +49,6 @@ class FlashCardWidget extends StatelessWidget {
           },
           borderRadius: BorderRadius.circular(10),
           child: Container(
-            // width: MediaQuery.of(context).size.width,
             padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 20),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -74,12 +73,17 @@ class FlashCardWidget extends StatelessWidget {
                         visible: flashCard.tags.isNotEmpty,
                         child: Column(
                           children: [
-                            SizedBox(height: 5),
+                            const SizedBox(height: 5),
                             Text(
                               'tags: ${flashCard.tags.join(', ')}',
                               style: TextStyle(
-                                  fontFamily: 'Comfortaa',
-                                  fontWeight: FontWeight.w500),
+                                fontFamily: 'Comfortaa',
+                                fontWeight: FontWeight.w500,
+                                color: DefaultTextStyle.of(context)
+                                    .style
+                                    .color
+                                    ?.withOpacity(0.7),
+                              ),
                             ),
                           ],
                         ),

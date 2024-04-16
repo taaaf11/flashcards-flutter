@@ -20,7 +20,7 @@ class FlashCardInfoDialog extends StatelessWidget {
                 'The Question is: ',
                 style: Theme.of(context).textTheme.headlineSmall,
               ),
-              SizedBox(height: 5),
+              const SizedBox(height: 5),
               Text(
                 flashCard.frontText,
                 textAlign: TextAlign.center,
@@ -30,7 +30,7 @@ class FlashCardInfoDialog extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(height: 18),
+          const SizedBox(height: 18),
           Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -38,7 +38,7 @@ class FlashCardInfoDialog extends StatelessWidget {
                 'The Answer is: ',
                 style: Theme.of(context).textTheme.headlineSmall,
               ),
-              SizedBox(height: 5),
+              const SizedBox(height: 5),
               Text(
                 flashCard.backText!,
                 textAlign: TextAlign.center,
