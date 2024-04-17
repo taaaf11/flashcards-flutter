@@ -170,7 +170,7 @@ class _AddFlashCardDialogState extends State<AddFlashCardDialog> {
       ),
       actions: [
         IconButton(
-          icon: const Icon(Icons.check),
+          icon: const Icon(Icons.check_rounded),
           onPressed: () {
             String frontText = _frontTextEditingController.text;
             String backText = _backTextEditingController.text;
@@ -216,7 +216,7 @@ class _AddFlashCardDialogState extends State<AddFlashCardDialog> {
           },
         ),
         IconButton(
-          icon: const Icon(Icons.cancel),
+          icon: const Icon(Icons.cancel_rounded),
           onPressed: () => Navigator.of(context).pop(),
         )
       ],

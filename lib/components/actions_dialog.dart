@@ -37,7 +37,7 @@ class ActionsDialog extends StatelessWidget {
             },
           ),
           IconTextButton(
-            icon: Icons.delete,
+            icon: Icons.delete_rounded,
             child: const Text('Delete'),
             onPress: () {
               flashCardsListProvider.remove(flashCard);

@@ -30,6 +30,15 @@ class FlashCardsRepository {
           ),
         );
 
-    return result.values.map((e) => FlashCard.fromMap(e)).toList();
+    var resultValues =
+        result.values.toList().map((e) => FlashCard.fromMap(e)).toList();
+
+    resultValues.sort((a, b) {
+      String timeOfCreationOfA = a.timeOfCreation;
+      String timeOfCreationOfB = b.timeOfCreation;
+      return timeOfCreationOfA.compareTo(timeOfCreationOfB);
+    });
+
+    return resultValues;
   }
 }

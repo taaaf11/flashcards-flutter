@@ -159,7 +159,7 @@ class _MyHomePageState extends State<MyHomePage> {
             selectedIcon: Icon(Icons.home_rounded),
           ),
           NavigationDrawerDestination(
-            icon: Icon(Icons.info_outline),
+            icon: Icon(Icons.info_outline_rounded),
             label: Text('About'),
             selectedIcon: Icon(Icons.info_rounded),
           )
@@ -170,7 +170,8 @@ class _MyHomePageState extends State<MyHomePage> {
         child: FloatingActionButton(
           onPressed: _showAddFlashCardDialog,
           tooltip: 'Add flashcard',
-          child: const Icon(Icons.add, color: kPrimaryColor),
+          shape: const CircleBorder(),
+          child: const Icon(Icons.add_rounded),
         ),
       ),
     );
