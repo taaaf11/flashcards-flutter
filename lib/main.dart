@@ -1,9 +1,10 @@
 import 'package:flashcards/components/add_flashcard_dialog.dart';
-import 'package:flashcards/components/flashcard_widget.dart';
 import 'package:flashcards/constants.dart';
 import 'package:flashcards/models/flashcard.dart';
 import 'package:flashcards/notifiers/flashcard_type_notifier.dart';
 import 'package:flashcards/notifiers/flashcards_notifier.dart';
+import 'package:flashcards/pages/about_page.dart';
+import 'package:flashcards/pages/flashcards_page.dart';
 import 'package:flashcards/types.dart';
 import 'package:flutter/foundation.dart';
 
@@ -66,6 +67,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  int _currentPage = 0;
   late FlashCardsListProvider flashCardsListProvider;
 
   @override
@@ -129,32 +131,47 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    var flashCardsState = Provider.of<FlashCardsListProvider>(context);
-
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: Column(
-        children: [
-          Expanded(
-            child: ListView.separated(
-              padding: const EdgeInsets.symmetric(vertical: 18),
-              itemCount: flashCardsState.flashCards.length,
-              itemBuilder: (context, index) {
-                return FlashCardWidget(
-                  flashCard: flashCardsState.flashCards[index],
-                );
-              },
-              separatorBuilder: (context, index) => const SizedBox(height: 12),
-            ),
+      body: switch (_currentPage) {
+        0 => const FlashCardsPage(),
+        1 => const AboutPage(),
+        _ => null
+      },
+      drawer: NavigationDrawer(
+        onDestinationSelected: (int? destIndex) {
+          setState(() {
+            assert(destIndex != null, 'Unknown page: $destIndex');
+
+            _currentPage = destIndex!;
+
+            // close the drawer; it doesn't automatically
+            Navigator.of(context).pop();
+          });
+        },
+        selectedIndex: _currentPage,
+        children: const [
+          NavigationDrawerDestination(
+            icon: Icon(Icons.home_outlined),
+            label: Text('Home'),
+            selectedIcon: Icon(Icons.home_rounded),
           ),
+          NavigationDrawerDestination(
+            icon: Icon(Icons.info_outline),
+            label: Text('About'),
+            selectedIcon: Icon(Icons.info_rounded),
+          )
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _showAddFlashCardDialog,
-        tooltip: 'Add flashcard',
-        child: const Icon(Icons.add, color: kPrimaryColor),
+      floatingActionButton: Visibility(
+        visible: _currentPage == 0,
+        child: FloatingActionButton(
+          onPressed: _showAddFlashCardDialog,
+          tooltip: 'Add flashcard',
+          child: const Icon(Icons.add, color: kPrimaryColor),
+        ),
       ),
     );
   }
