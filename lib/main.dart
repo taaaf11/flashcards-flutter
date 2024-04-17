@@ -1,7 +1,9 @@
+import 'package:flashcards/pages/settings_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:provider/provider.dart';
+import 'package:adaptive_theme/adaptive_theme.dart';
 
 import 'package:flashcards/flashcard_repository/flashcard_repository.dart';
 import 'package:flashcards/components/add_flashcard_dialog.dart';
@@ -41,17 +43,30 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(create: (_) => FlashCardTypeNotifier()),
       ],
-      child: MaterialApp(
-        title: 'FlashCards',
-        theme: ThemeData(
+      child: AdaptiveTheme(
+        light: ThemeData(
           colorScheme: ColorScheme.fromSeed(
             seedColor: kPrimaryColor,
-            // brightness: Brightness.dark,
+            brightness: Brightness.light,
           ),
           fontFamily: 'Comfortaa',
           useMaterial3: true,
         ),
-        home: const MyHomePage(title: 'Flashcards'),
+        dark: ThemeData(
+          colorScheme: ColorScheme.fromSeed(
+            seedColor: kPrimaryColor,
+            brightness: Brightness.dark,
+          ),
+          fontFamily: 'Comfortaa',
+          useMaterial3: true,
+        ),
+        initial: AdaptiveThemeMode.light,
+        builder: (theme, darkTheme) => MaterialApp(
+          title: 'FlashCards',
+          theme: theme,
+          darkTheme: darkTheme,
+          home: const MyHomePage(title: 'Flashcards'),
+        ),
       ),
     );
   }
@@ -131,13 +146,28 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    AdaptiveThemeMode currentThemeMode = AdaptiveTheme.of(context).mode;
+
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
+        actions: [
+          IconButton(
+            icon: Icon(
+              currentThemeMode == AdaptiveThemeMode.light
+                  ? Icons.dark_mode
+                  : Icons.light_mode,
+            ),
+            onPressed: () => currentThemeMode == AdaptiveThemeMode.light
+                ? AdaptiveTheme.of(context).setDark()
+                : AdaptiveTheme.of(context).setLight(),
+          )
+        ],
       ),
       body: switch (_currentPage) {
         0 => const FlashCardsPage(),
-        1 => const AboutPage(),
+        1 => const SettingsPage(),
+        2 => const AboutPage(),
         _ => null
       },
       drawer: NavigationDrawer(
@@ -157,6 +187,11 @@ class _MyHomePageState extends State<MyHomePage> {
             icon: Icon(Icons.home_outlined),
             label: Text('Home'),
             selectedIcon: Icon(Icons.home_rounded),
+          ),
+          NavigationDrawerDestination(
+            icon: Icon(Icons.settings_outlined),
+            label: Text('Settings'),
+            selectedIcon: Icon(Icons.settings_rounded),
           ),
           NavigationDrawerDestination(
             icon: Icon(Icons.info_outline_rounded),
