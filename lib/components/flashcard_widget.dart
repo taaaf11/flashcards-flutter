@@ -1,10 +1,14 @@
+// 🐦 Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:adaptive_theme/adaptive_theme.dart';
-import 'package:flashcards/utils.dart';
 
+// 📦 Package imports:
+import 'package:adaptive_theme/adaptive_theme.dart';
+
+// 🌎 Project imports:
 import 'package:flashcards/components/actions_dialog.dart';
 import 'package:flashcards/components/flashcard_info_dialog.dart';
 import 'package:flashcards/models/flashcard.dart';
+import 'package:flashcards/utils.dart';
 
 class FlashCardWidget extends StatelessWidget {
   final FlashCard flashCard;

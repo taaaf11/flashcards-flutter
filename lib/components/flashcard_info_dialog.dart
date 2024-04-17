@@ -1,8 +1,10 @@
+// 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 
+// 🌎 Project imports:
+import 'package:flashcards/constants.dart';
 import 'package:flashcards/models/flashcard.dart';
 import 'package:flashcards/types.dart';
-import 'package:flashcards/constants.dart';
 
 class FlashCardInfoDialog extends StatelessWidget {
   final FlashCard flashCard;

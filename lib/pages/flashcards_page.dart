@@ -1,8 +1,12 @@
+// 🐦 Flutter imports:
 import 'package:flutter/material.dart';
+
+// 📦 Package imports:
 import 'package:provider/provider.dart';
 
-import 'package:flashcards/notifiers/flashcards_notifier.dart';
+// 🌎 Project imports:
 import 'package:flashcards/components/flashcard_widget.dart';
+import 'package:flashcards/notifiers/flashcards_notifier.dart';
 
 class FlashCardsPage extends StatelessWidget {
   const FlashCardsPage({super.key});

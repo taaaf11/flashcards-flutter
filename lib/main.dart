@@ -1,18 +1,22 @@
-import 'package:flashcards/pages/settings_page.dart';
-import 'package:flutter/material.dart';
+// 🐦 Flutter imports:
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+
+// 📦 Package imports:
+import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:provider/provider.dart';
-import 'package:adaptive_theme/adaptive_theme.dart';
 
-import 'package:flashcards/flashcard_repository/flashcard_repository.dart';
+// 🌎 Project imports:
 import 'package:flashcards/components/add_flashcard_dialog.dart';
 import 'package:flashcards/constants.dart';
+import 'package:flashcards/flashcard_repository/flashcard_repository.dart';
 import 'package:flashcards/models/flashcard.dart';
 import 'package:flashcards/notifiers/flashcard_type_notifier.dart';
 import 'package:flashcards/notifiers/flashcards_notifier.dart';
 import 'package:flashcards/pages/about_page.dart';
 import 'package:flashcards/pages/flashcards_page.dart';
+import 'package:flashcards/pages/settings_page.dart';
 import 'package:flashcards/types.dart';
 
 void main() async {

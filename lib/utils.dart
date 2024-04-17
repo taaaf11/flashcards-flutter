@@ -1,6 +1,10 @@
+// 🐦 Flutter imports:
 import 'package:flutter/material.dart';
+
+// 📦 Package imports:
 import 'package:adaptive_theme/adaptive_theme.dart';
 
+// 🌎 Project imports:
 import 'constants.dart';
 import 'types.dart';
 

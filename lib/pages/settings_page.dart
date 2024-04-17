@@ -1,6 +1,10 @@
+// 🐦 Flutter imports:
 import 'package:flutter/material.dart';
+
+// 📦 Package imports:
 import 'package:adaptive_theme/adaptive_theme.dart';
 
+// 🌎 Project imports:
 import 'package:flashcards/components/icon_text_button.dart';
 
 class SettingsPage extends StatefulWidget {
