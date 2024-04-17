@@ -17,12 +17,16 @@ class ActionsDialog extends StatelessWidget {
         Provider.of<FlashCardsListProvider>(context);
 
     return AlertDialog(
-      contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+      contentPadding: const EdgeInsets.symmetric(horizontal: 10, vertical: 12),
       content: Column(
         mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           IconTextButton(
-            icon: Icons.edit_rounded,
+            icon: const Icon(Icons.edit_rounded),
+            borderRadius: BorderRadius.circular(12),
+            margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+            spacing: 10,
             child: const Text('Edit'),
             onPress: () {
               Navigator.of(context).pop();
@@ -38,12 +42,15 @@ class ActionsDialog extends StatelessWidget {
             },
           ),
           IconTextButton(
-            icon: Icons.delete_rounded,
-            child: const Text('Delete'),
+            icon: const Icon(Icons.delete_rounded),
+            borderRadius: BorderRadius.circular(12),
+            margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+            spacing: 10,
             onPress: () {
               flashCardsListProvider.remove(flashCard);
               Navigator.of(context).pop();
             },
+            child: const Text('Delete'),
           )
         ],
       ),

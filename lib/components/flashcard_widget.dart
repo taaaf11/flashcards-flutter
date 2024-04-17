@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:adaptive_theme/adaptive_theme.dart';
+import 'package:flashcards/utils.dart';
 
 import 'package:flashcards/components/actions_dialog.dart';
 import 'package:flashcards/components/flashcard_info_dialog.dart';
-import 'package:flashcards/constants.dart';
-import 'package:flashcards/types.dart';
 import 'package:flashcards/models/flashcard.dart';
 
 class FlashCardWidget extends StatelessWidget {
@@ -15,17 +15,7 @@ class FlashCardWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: switch (flashCard.type) {
-          CardType.idea => const Color(0xffffef00).withAlpha(180),
-          CardType.qa => switch (flashCard.difficulty) {
-              Difficulty.easy => kPrimaryColor.withAlpha(125),
-              // 2 => Colors.orange.withAlpha(125),
-              Difficulty.medium => const Color(0xffffe5b4),
-              Difficulty.hard => Colors.red.withAlpha(125),
-              // null => Colors.yellow.withAlpha(125),
-              _ => const Color(0xffffef00).withAlpha(180),
-            },
-        },
+        color: getCardColor(context, flashCard),
         borderRadius: BorderRadius.circular(10),
       ),
       margin: const EdgeInsets.symmetric(horizontal: 20),
@@ -68,7 +58,11 @@ class FlashCardWidget extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                         style: Theme.of(context).textTheme.labelLarge?.copyWith(
                               fontFamily: 'Comfortaa',
-                              color: Theme.of(context).colorScheme.onSurface,
+                              // color: getTextColor(context, flashCard),
+                              color: AdaptiveTheme.of(context).mode ==
+                                      AdaptiveThemeMode.dark
+                                  ? Colors.white
+                                  : Colors.black,
                               fontWeight: FontWeight.w700,
                             ),
                       ),
@@ -82,10 +76,13 @@ class FlashCardWidget extends StatelessWidget {
                               style: TextStyle(
                                 fontFamily: 'Comfortaa',
                                 fontWeight: FontWeight.w500,
-                                color: DefaultTextStyle.of(context)
-                                    .style
-                                    .color
-                                    ?.withOpacity(0.7),
+                                color: AdaptiveTheme.of(context).mode ==
+                                        AdaptiveThemeMode.light
+                                    ? DefaultTextStyle.of(context)
+                                        .style
+                                        .color
+                                        ?.withOpacity(0.7)
+                                    : Colors.white,
                               ),
                             ),
                           ],
