@@ -7,10 +7,11 @@ import 'package:provider/provider.dart';
 
 // ignore: must_be_immutable
 class AddFlashCardDialog extends StatefulWidget {
-  bool? editFlashCard;
+  bool editFlashCard;
   FlashCard? flashCardForEdit;
 
-  AddFlashCardDialog({super.key, this.editFlashCard, this.flashCardForEdit});
+  AddFlashCardDialog(
+      {super.key, this.editFlashCard = false, this.flashCardForEdit});
 
   @override
   State<AddFlashCardDialog> createState() => _AddFlashCardDialogState();
@@ -30,7 +31,7 @@ class _AddFlashCardDialogState extends State<AddFlashCardDialog> {
     _frontTextEditingController = TextEditingController();
     _tagsTextEditingController = TextEditingController();
 
-    if (widget.editFlashCard != null) {
+    if (widget.editFlashCard) {
       assert(widget.flashCardForEdit != null,
           'Flashcard is not provided for editing.');
       _backTextEditingController.text = widget.flashCardForEdit!.backText ?? '';
@@ -187,10 +188,14 @@ class _AddFlashCardDialogState extends State<AddFlashCardDialog> {
             String backText = _backTextEditingController.text;
             String tagsString = _tagsTextEditingController.text;
 
-            // print('sldjkflsjflsj');
-
             setState(() {
-              if (!isFrontTextNotEmpty(frontText)) {
+              if (widget.editFlashCard) {
+                assert(widget.flashCardForEdit != null);
+
+                flashCardsListState.remove(widget.flashCardForEdit!);
+              }
+
+              if (frontText.isEmpty) {
                 Navigator.of(context).pop();
                 return;
               }
