@@ -1,3 +1,5 @@
+import 'package:flashcards/components/flashcard_type.dart';
+import 'package:flashcards/notifiers/flashcard_type_notifier.dart';
 import 'package:flashcards/notifiers/flashcards_notifier.dart';
 import 'package:flashcards/types.dart';
 import 'package:flashcards/validations.dart';
@@ -26,7 +28,7 @@ class _AddFlashCardDialogState extends State<AddFlashCardDialog> {
   late TextEditingController _tagsTextEditingController;
   Difficulty _difficultyLevel = Difficulty.easy; // easy
 
-  CardType cardType = CardType.idea;
+  // CardType cardType = CardType.idea;
 
   @override
   void initState() {
@@ -57,6 +59,7 @@ class _AddFlashCardDialogState extends State<AddFlashCardDialog> {
   @override
   Widget build(BuildContext context) {
     var flashCardsListState = Provider.of<FlashCardsListProvider>(context);
+    var flashCardTypeState = Provider.of<FlashCardTypeNotifier>(context);
 
     return AlertDialog(
       content: Column(
@@ -66,7 +69,9 @@ class _AddFlashCardDialogState extends State<AddFlashCardDialog> {
             children: [
               Expanded(
                 child: Text(
-                  cardType == CardType.idea ? 'Idea:' : 'Question',
+                  flashCardTypeState.selection == CardType.idea
+                      ? 'Idea:'
+                      : 'Question',
                   style: const TextStyle(
                       fontSize: 18, fontWeight: FontWeight.bold),
                 ),
@@ -80,7 +85,7 @@ class _AddFlashCardDialogState extends State<AddFlashCardDialog> {
             ],
           ),
           const SizedBox(height: 20),
-          cardType == CardType.qa
+          flashCardTypeState.selection == CardType.qa
               ? Row(
                   children: [
                     const Expanded(
@@ -99,10 +104,10 @@ class _AddFlashCardDialogState extends State<AddFlashCardDialog> {
                   ],
                 )
               : const SizedBox.shrink(),
-          cardType == CardType.qa
+          flashCardTypeState.selection == CardType.qa
               ? const SizedBox(height: 30)
               : const SizedBox.shrink(),
-          cardType == CardType.qa
+          flashCardTypeState.selection == CardType.qa
               ? Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -140,7 +145,7 @@ class _AddFlashCardDialogState extends State<AddFlashCardDialog> {
                   ],
                 )
               : const SizedBox.shrink(),
-          cardType == CardType.qa
+          flashCardTypeState.selection == CardType.qa
               ? const SizedBox(height: 20)
               : const SizedBox.shrink(),
           Row(
@@ -160,28 +165,7 @@ class _AddFlashCardDialogState extends State<AddFlashCardDialog> {
             ],
           ),
           const SizedBox(height: 20),
-          SegmentedButton<CardType>(
-            segments: const <ButtonSegment<CardType>>[
-              ButtonSegment(
-                value: CardType.idea,
-                label: Text('Idea'),
-                icon: Icon(Icons.lightbulb_outline_rounded),
-              ),
-              ButtonSegment(
-                value: CardType.qa,
-                label: Text('Q/A'),
-                icon: Icon(Icons.question_mark_outlined),
-              )
-            ],
-            selected: <CardType>{cardType},
-            onSelectionChanged: (Set<CardType> newSelection) {
-              setState(
-                () {
-                  cardType = newSelection.first;
-                },
-              );
-            },
-          ),
+          const FlashCardType()
         ],
       ),
       actions: [
@@ -199,7 +183,8 @@ class _AddFlashCardDialogState extends State<AddFlashCardDialog> {
                   return;
                 }
 
-                if (cardType == CardType.qa && backText == '') {
+                if (flashCardTypeState.selection == CardType.qa &&
+                    backText == '') {
                   Navigator.of(context).pop();
                   return;
                 }
@@ -213,9 +198,13 @@ class _AddFlashCardDialogState extends State<AddFlashCardDialog> {
                 FlashCard flashCard = FlashCard(
                   timeOfCreation: DateTime.now().toIso8601String(),
                   frontText: frontText,
-                  backText: cardType == CardType.qa ? backText : null,
-                  difficulty: cardType == CardType.qa ? _difficultyLevel : null,
-                  type: cardType,
+                  backText: flashCardTypeState.selection == CardType.qa
+                      ? backText
+                      : null,
+                  difficulty: flashCardTypeState.selection == CardType.qa
+                      ? _difficultyLevel
+                      : null,
+                  type: flashCardTypeState.selection,
                   tags: tags,
                 );
 

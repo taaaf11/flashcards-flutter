@@ -2,6 +2,7 @@ import 'package:flashcards/components/add_flashcard_dialog.dart';
 import 'package:flashcards/components/flashcard_widget.dart';
 import 'package:flashcards/constants.dart';
 import 'package:flashcards/models/flashcard.dart';
+import 'package:flashcards/notifiers/flashcard_type_notifier.dart';
 import 'package:flashcards/notifiers/flashcards_notifier.dart';
 import 'package:flashcards/types.dart';
 import 'package:flutter/foundation.dart';
@@ -31,9 +32,14 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) =>
-          FlashCardsListProvider(FlashCardsRepository.getFlashCards()),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) =>
+              FlashCardsListProvider(FlashCardsRepository.getFlashCards()),
+        ),
+        ChangeNotifierProvider(create: (_) => FlashCardTypeNotifier()),
+      ],
       child: MaterialApp(
         title: 'FlashCards',
         theme: ThemeData(
