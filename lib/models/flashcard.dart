@@ -33,7 +33,7 @@ class FlashCard {
         'frontText': frontText,
         'backText': backText,
         'difficulty': difficulty,
-        'type': CardType,
+        'type': type,
         'tags': tags,
       };
 

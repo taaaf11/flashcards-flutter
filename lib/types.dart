@@ -9,7 +9,7 @@ enum CardType {
 
   @HiveField(1)
   qa
-} // TODO: Change the name of enum!!
+}
 
 @HiveType(typeId: 1)
 enum Difficulty {
