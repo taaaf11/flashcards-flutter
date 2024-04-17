@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:flashcards/types.dart';
 
 class FlashCardTypeNotifier with ChangeNotifier {

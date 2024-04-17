@@ -1,5 +1,6 @@
-import 'package:flashcards/models/flashcard.dart';
 import 'package:hive/hive.dart';
+
+import 'package:flashcards/models/flashcard.dart';
 
 class FlashCardsRepository {
   static late final Box box;

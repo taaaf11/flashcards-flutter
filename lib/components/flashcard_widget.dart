@@ -1,8 +1,9 @@
+import 'package:flutter/material.dart';
+
 import 'package:flashcards/components/actions_dialog.dart';
 import 'package:flashcards/components/flashcard_info_dialog.dart';
 import 'package:flashcards/constants.dart';
 import 'package:flashcards/types.dart';
-import 'package:flutter/material.dart';
 import 'package:flashcards/models/flashcard.dart';
 
 class FlashCardWidget extends StatelessWidget {

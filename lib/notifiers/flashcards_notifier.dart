@@ -1,6 +1,7 @@
+import 'package:flutter/material.dart';
+
 import 'package:flashcards/flashcard_repository/flashcard_repository.dart';
 import 'package:flashcards/models/flashcard.dart';
-import 'package:flutter/material.dart';
 
 class FlashCardsListProvider with ChangeNotifier {
   late List<FlashCard> _flashCards;

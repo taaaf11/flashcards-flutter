@@ -1,6 +1,7 @@
+import 'package:flutter/material.dart';
+
 import 'package:flashcards/models/flashcard.dart';
 import 'package:flashcards/types.dart';
-import 'package:flutter/material.dart';
 import 'package:flashcards/constants.dart';
 
 class FlashCardInfoDialog extends StatelessWidget {

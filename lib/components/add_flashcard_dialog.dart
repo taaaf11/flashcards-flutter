@@ -2,10 +2,11 @@ import 'package:flashcards/components/flashcard_type.dart';
 import 'package:flashcards/notifiers/flashcard_type_notifier.dart';
 import 'package:flashcards/notifiers/flashcards_notifier.dart';
 import 'package:flashcards/types.dart';
-import 'package:flashcards/validations.dart';
+import 'package:flashcards/utils.dart';
 import 'package:flutter/material.dart';
-import 'package:flashcards/models/flashcard.dart';
 import 'package:provider/provider.dart';
+
+import 'package:flashcards/models/flashcard.dart';
 
 // ignore: must_be_immutable
 class AddFlashCardDialog extends StatefulWidget {
