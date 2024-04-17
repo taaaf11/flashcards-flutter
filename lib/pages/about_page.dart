@@ -10,14 +10,12 @@ class AboutPage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text('Written by:', style: Theme.of(context).textTheme.headlineSmall),
-          const SizedBox(height: 15),
+          const SizedBox(height: 18),
           const CircleAvatar(
-            foregroundImage: NetworkImage(
-              'https://avatars.githubusercontent.com/u/109919009?s=256&v=4',
-            ),
+            foregroundImage: AssetImage('me.jpeg'),
             radius: 40,
           ),
-          const SizedBox(height: 18),
+          const SizedBox(height: 15),
           Text(
             'Muhammad Altaaf',
             style: Theme.of(context).textTheme.titleLarge,
