@@ -1,5 +1,5 @@
 import 'package:flashcards/components/actions_dialog.dart';
-import 'package:flashcards/components/back_text_dialog.dart';
+import 'package:flashcards/components/flashcard_info_dialog.dart';
 import 'package:flashcards/constants.dart';
 import 'package:flashcards/types.dart';
 import 'package:flutter/material.dart';
@@ -34,7 +34,6 @@ class FlashCardWidget extends StatelessWidget {
           hoverDuration: const Duration(milliseconds: 20),
           splashColor: Theme.of(context).splashColor.withOpacity(0.1),
           onTap: () {
-            if (flashCard.backText == null) return;
             showDialog(
               context: context,
               builder: (context) {

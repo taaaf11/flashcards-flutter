@@ -14,7 +14,9 @@ class ActionsDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     FlashCardsListProvider flashCardsListProvider =
         Provider.of<FlashCardsListProvider>(context);
+
     return AlertDialog(
+      contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [

@@ -10,8 +10,11 @@ class AddFlashCardDialog extends StatefulWidget {
   bool editFlashCard;
   FlashCard? flashCardForEdit;
 
-  AddFlashCardDialog(
-      {super.key, this.editFlashCard = false, this.flashCardForEdit});
+  AddFlashCardDialog({
+    super.key,
+    this.editFlashCard = false,
+    this.flashCardForEdit,
+  });
 
   @override
   State<AddFlashCardDialog> createState() => _AddFlashCardDialogState();
@@ -130,7 +133,6 @@ class _AddFlashCardDialogState extends State<AddFlashCardDialog> {
                           Difficulty.easy => 'Easy',
                           Difficulty.medium => 'Medium',
                           Difficulty.hard => 'Hard',
-                          // _ => null
                         },
                         divisions: 2,
                       ),
@@ -173,9 +175,11 @@ class _AddFlashCardDialogState extends State<AddFlashCardDialog> {
             ],
             selected: <CardType>{cardType},
             onSelectionChanged: (Set<CardType> newSelection) {
-              setState(() {
-                cardType = newSelection.first;
-              });
+              setState(
+                () {
+                  cardType = newSelection.first;
+                },
+              );
             },
           ),
         ],
@@ -188,33 +192,38 @@ class _AddFlashCardDialogState extends State<AddFlashCardDialog> {
             String backText = _backTextEditingController.text;
             String tagsString = _tagsTextEditingController.text;
 
-            setState(() {
-              if (widget.editFlashCard) {
-                assert(widget.flashCardForEdit != null);
+            setState(
+              () {
+                if (frontText.isEmpty) {
+                  Navigator.of(context).pop();
+                  return;
+                }
 
-                flashCardsListState.remove(widget.flashCardForEdit!);
-              }
+                if (cardType == CardType.qa && backText == '') {
+                  Navigator.of(context).pop();
+                  return;
+                }
 
-              if (frontText.isEmpty) {
+                if (widget.editFlashCard) {
+                  flashCardsListState.remove(widget.flashCardForEdit!);
+                }
+
+                List<String> tags = getTagsFromTagsString(tagsString);
+
+                FlashCard flashCard = FlashCard(
+                  timeOfCreation: DateTime.now().toIso8601String(),
+                  frontText: frontText,
+                  backText: cardType == CardType.qa ? backText : null,
+                  difficulty: cardType == CardType.qa ? _difficultyLevel : null,
+                  type: cardType,
+                  tags: tags,
+                );
+
+                flashCardsListState.add(flashCard);
+
                 Navigator.of(context).pop();
-                return;
-              }
-
-              List<String> tags = getTagsFromTagsString(tagsString);
-
-              FlashCard flashCard = FlashCard(
-                timeOfCreation: DateTime.now().toIso8601String(),
-                frontText: frontText,
-                backText: cardType == CardType.qa ? backText : null,
-                difficulty: cardType == CardType.qa ? _difficultyLevel : null,
-                type: cardType,
-                tags: tags,
-              );
-
-              flashCardsListState.add(flashCard);
-
-              Navigator.of(context).pop();
-            });
+              },
+            );
           },
         ),
         IconButton(

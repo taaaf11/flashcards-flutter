@@ -1,4 +1,5 @@
 import 'package:flashcards/models/flashcard.dart';
+import 'package:flashcards/types.dart';
 import 'package:flutter/material.dart';
 import 'package:flashcards/constants.dart';
 
@@ -17,10 +18,10 @@ class FlashCardInfoDialog extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                'The Question is: ',
+                flashCard.type == CardType.qa ? 'Question:' : 'Idea',
                 style: Theme.of(context).textTheme.headlineSmall,
               ),
-              const SizedBox(height: 5),
+              const SizedBox(height: 10),
               Text(
                 flashCard.frontText,
                 textAlign: TextAlign.center,
@@ -30,24 +31,26 @@ class FlashCardInfoDialog extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 18),
-          Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                'The Answer is: ',
-                style: Theme.of(context).textTheme.headlineSmall,
-              ),
-              const SizedBox(height: 5),
-              Text(
-                flashCard.backText!,
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                      color: kPrimaryColor.withOpacity(0.9),
+          flashCard.type == CardType.qa && flashCard.backText != null
+              ? Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const SizedBox(height: 18),
+                    Text(
+                      'Answer:',
+                      style: Theme.of(context).textTheme.headlineSmall,
                     ),
-              ),
-            ],
-          ),
+                    const SizedBox(height: 10),
+                    Text(
+                      flashCard.backText!,
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                            color: kPrimaryColor.withOpacity(0.9),
+                          ),
+                    ),
+                  ],
+                )
+              : const SizedBox.shrink(),
         ],
       ),
     );
