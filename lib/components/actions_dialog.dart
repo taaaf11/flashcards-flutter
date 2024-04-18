@@ -52,6 +52,7 @@ class ActionsDialog extends StatelessWidget {
             spacing: 10,
             onPress: () {
               flashCardsListProvider.remove(flashCard);
+
               Navigator.of(context).pop();
             },
             child: const Text('Delete'),
