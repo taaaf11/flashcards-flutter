@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 
 // 📦 Package imports:
 import 'package:adaptive_theme/adaptive_theme.dart';
+import 'package:provider/provider.dart';
+import 'package:flashcards/notifiers/flashcard_details.dart';
 
 // 🌎 Project imports:
 import 'constants.dart';
@@ -43,4 +45,12 @@ Color getCardColor(context, flashCard) {
       return const Color(0xffffef00).withAlpha(180);
   }
   throw Exception("Unknown type/idea ");
+}
+
+void clearFlashCardDetails(context) {
+  Provider.of<FlashCardDetailsNotifier>(context, listen: false).frontText = '';
+  Provider.of<FlashCardDetailsNotifier>(context, listen: false).backText = '';
+  Provider.of<FlashCardDetailsNotifier>(context, listen: false).tags = '';
+  Provider.of<FlashCardDetailsNotifier>(context, listen: false).difficulty =
+      null;
 }

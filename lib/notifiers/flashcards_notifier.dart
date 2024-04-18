@@ -22,7 +22,36 @@ class FlashCardsListProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void remove(FlashCard flashCard) {
+  void insert(int index, FlashCard flashCard) {
+    FlashCardsAnimatedListKeyProvider.listeState
+        ?.insertItem(index, duration: const Duration(milliseconds: 500));
+    _flashCards.insert(index, flashCard);
+    FlashCardsRepository.insertFlashCard(flashCard);
+    notifyListeners();
+  }
+
+  int remove(FlashCard flashCard) {
+    int index = _flashCards.indexOf(flashCard);
+
+    FlashCardsRepository.removeFlashCard(flashCard);
+    FlashCard removed = _flashCards.removeAt(index);
+
+    FlashCardsAnimatedListKeyProvider.key?.currentState?.removeItem(
+      index,
+      (context, animation) => SizeTransition(
+        sizeFactor: animation,
+        child: FlashCardWidget(
+          flashCard: removed,
+        ),
+      ),
+      duration: const Duration(milliseconds: 250),
+    );
+
+    notifyListeners();
+    return index;
+  }
+
+  void edit(FlashCard flashCard) {
     int index = _flashCards.indexOf(flashCard);
 
     FlashCardsRepository.removeFlashCard(flashCard);

@@ -13,7 +13,7 @@ class AboutPage extends StatelessWidget {
           Text('Written by:', style: Theme.of(context).textTheme.headlineSmall),
           const SizedBox(height: 18),
           const CircleAvatar(
-            foregroundImage: AssetImage('me.jpeg'),
+            foregroundImage: AssetImage('assets/me.jpeg'),
             radius: 40,
           ),
           const SizedBox(height: 15),

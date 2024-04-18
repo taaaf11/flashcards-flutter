@@ -1,11 +1,13 @@
 // 🐦 Flutter imports:
+import 'package:flashcards/components/idea_creation_dialog_contect.dart';
+import 'package:flashcards/components/qa_creation_dialog_content.dart';
+import 'package:flashcards/notifiers/flashcard_details.dart';
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
 import 'package:provider/provider.dart';
 
 // 🌎 Project imports:
-import 'package:flashcards/components/flashcard_type.dart';
 import 'package:flashcards/models/flashcard.dart';
 import 'package:flashcards/notifiers/flashcard_type_notifier.dart';
 import 'package:flashcards/notifiers/flashcards_notifier.dart';
@@ -31,7 +33,9 @@ class _AddFlashCardDialogState extends State<AddFlashCardDialog> {
   late TextEditingController _backTextEditingController;
   late TextEditingController _frontTextEditingController;
   late TextEditingController _tagsTextEditingController;
-  Difficulty _difficultyLevel = Difficulty.easy;
+  Set<CardType> cardType = {CardType.idea};
+  // ignore: prefer_final_fields
+  // Difficulty _difficultyLevel = Difficulty.easy;
 
   @override
   void initState() {
@@ -42,9 +46,15 @@ class _AddFlashCardDialogState extends State<AddFlashCardDialog> {
     if (widget.editFlashCard) {
       assert(widget.flashCardForEdit != null,
           'Flashcard is not provided for editing.');
-      _backTextEditingController.text = widget.flashCardForEdit!.backText ?? '';
-      _frontTextEditingController.text = widget.flashCardForEdit!.frontText;
-      _tagsTextEditingController.text = widget.flashCardForEdit!.tags.join(',');
+
+      Provider.of<FlashCardDetailsNotifier>(context, listen: false).backText =
+          widget.flashCardForEdit!.backText ?? '';
+      Provider.of<FlashCardDetailsNotifier>(context, listen: false).frontText =
+          widget.flashCardForEdit!.frontText;
+      Provider.of<FlashCardDetailsNotifier>(context, listen: false).tags =
+          widget.flashCardForEdit!.tags.join(',');
+      Provider.of<FlashCardDetailsNotifier>(context, listen: false).difficulty =
+          widget.flashCardForEdit!.difficulty ?? Difficulty.easy;
     }
 
     super.initState();
@@ -65,122 +75,70 @@ class _AddFlashCardDialogState extends State<AddFlashCardDialog> {
     var flashCardTypeState = Provider.of<FlashCardTypeNotifier>(context);
 
     return AlertDialog(
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Row(
-            children: [
-              Expanded(
-                child: Text(
-                  flashCardTypeState.selection == CardType.idea
-                      ? 'Idea:'
-                      : 'Question',
-                  style: const TextStyle(
-                      fontSize: 18, fontWeight: FontWeight.bold),
-                ),
+      content: AnimatedSize(
+        duration: const Duration(milliseconds: 400),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            AnimatedSwitcher(
+              duration: const Duration(milliseconds: 600),
+              child: Consumer(
+                builder: ((context, FlashCardTypeNotifier value, child) {
+                  return cardType.first == CardType.qa
+                      ? const QACreationForm()
+                      : const IdeaCreationForm();
+                }),
               ),
-              SizedBox(
-                width: 110,
-                child: TextField(
-                  controller: _frontTextEditingController,
+            ),
+            const SizedBox(height: 20),
+            SegmentedButton<CardType>(
+              segments: const <ButtonSegment<CardType>>[
+                ButtonSegment(
+                  value: CardType.idea,
+                  label: Text('Idea'),
+                  icon: Icon(Icons.lightbulb_outline_rounded),
                 ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 20),
-          flashCardTypeState.selection == CardType.qa
-              ? Row(
-                  children: [
-                    const Expanded(
-                      child: Text(
-                        'Answer:',
-                        style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                    SizedBox(
-                      width: 110,
-                      child: TextField(
-                        controller: _backTextEditingController,
-                      ),
-                    ),
-                  ],
+                ButtonSegment(
+                  value: CardType.qa,
+                  label: Text('Q/A'),
+                  icon: Icon(Icons.question_mark_outlined),
                 )
-              : const SizedBox.shrink(),
-          flashCardTypeState.selection == CardType.qa
-              ? const SizedBox(height: 30)
-              : const SizedBox.shrink(),
-          flashCardTypeState.selection == CardType.qa
-              ? Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Text(
-                      'Difficulty:',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    SizedBox(
-                      width: 110,
-                      child: Slider(
-                        onChanged: (double? value) {
-                          setState(() {
-                            _difficultyLevel = switch (value) {
-                              1 => Difficulty.easy,
-                              2 => Difficulty.medium,
-                              3 => Difficulty.hard,
-                              _ => Difficulty.hard,
-                            };
-                          });
-                        },
-                        value: _difficultyLevel.index + 1,
-                        min: 1,
-                        max: 3,
-                        label: switch (_difficultyLevel) {
-                          Difficulty.easy => 'Easy',
-                          Difficulty.medium => 'Medium',
-                          Difficulty.hard => 'Hard',
-                        },
-                        divisions: 2,
-                      ),
-                    )
-                  ],
-                )
-              : const SizedBox.shrink(),
-          flashCardTypeState.selection == CardType.qa
-              ? const SizedBox(height: 20)
-              : const SizedBox.shrink(),
-          Row(
-            children: [
-              const Expanded(
-                child: Text(
-                  'Tags:',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                ),
-              ),
-              SizedBox(
-                width: 110,
-                child: TextField(
-                  controller: _tagsTextEditingController,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 20),
-          const FlashCardType()
-        ],
+              ],
+              selected: cardType,
+              onSelectionChanged: (Set<CardType> newSelection) {
+                setState(
+                  () {
+                    cardType = newSelection;
+                  },
+                );
+              },
+            ),
+          ],
+        ),
       ),
       actions: [
         IconButton(
           icon: const Icon(Icons.check_rounded),
           onPressed: () {
-            String frontText = _frontTextEditingController.text;
-            String backText = _backTextEditingController.text;
-            String tagsString = _tagsTextEditingController.text;
+            String frontText =
+                Provider.of<FlashCardDetailsNotifier>(context, listen: false)
+                    .frontText!;
+            String backText =
+                Provider.of<FlashCardDetailsNotifier>(context, listen: false)
+                        .backText ??
+                    '';
+            String tagsString =
+                Provider.of<FlashCardDetailsNotifier>(context, listen: false)
+                        .tags ??
+                    '';
+            Difficulty? difficulty =
+                Provider.of<FlashCardDetailsNotifier>(context, listen: false)
+                    .difficulty;
 
             setState(
               () {
+                int? removedIndex;
+
                 if (frontText.isEmpty) {
                   Navigator.of(context).pop();
                   return;
@@ -193,7 +151,8 @@ class _AddFlashCardDialogState extends State<AddFlashCardDialog> {
                 }
 
                 if (widget.editFlashCard) {
-                  flashCardsListState.remove(widget.flashCardForEdit!);
+                  removedIndex =
+                      flashCardsListState.remove(widget.flashCardForEdit!);
                 }
 
                 List<String> tags = getTagsFromTagsString(tagsString);
@@ -204,14 +163,20 @@ class _AddFlashCardDialogState extends State<AddFlashCardDialog> {
                   backText: flashCardTypeState.selection == CardType.qa
                       ? backText
                       : null,
-                  difficulty: flashCardTypeState.selection == CardType.qa
-                      ? _difficultyLevel
-                      : null,
+                  // difficulty: Provider.of<FlashCardDetailsNotifier>(context,
+                  //         listen: false)
+                  //     .difficulty,
+                  difficulty: difficulty,
                   type: flashCardTypeState.selection,
                   tags: tags,
                 );
 
-                flashCardsListState.add(flashCard);
+                if (widget.editFlashCard) {
+                  flashCardsListState.insert(
+                      removedIndex!, widget.flashCardForEdit!);
+                } else {
+                  flashCardsListState.add(flashCard);
+                }
 
                 Navigator.of(context).pop();
               },
@@ -220,7 +185,9 @@ class _AddFlashCardDialogState extends State<AddFlashCardDialog> {
         ),
         IconButton(
           icon: const Icon(Icons.cancel_rounded),
-          onPressed: () => Navigator.of(context).pop(),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
         )
       ],
       actionsAlignment: MainAxisAlignment.center,

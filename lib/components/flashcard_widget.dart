@@ -56,7 +56,7 @@ class FlashCardWidget extends StatelessWidget {
                   (context, animation, secondaryAnimation, child) {
                 return AnimatedOpacity(
                   opacity: animation.value,
-                  duration: const Duration(milliseconds: 8),
+                  duration: const Duration(milliseconds: 200),
                   child: child,
                 );
               },

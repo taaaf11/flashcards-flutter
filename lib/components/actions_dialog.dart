@@ -1,4 +1,5 @@
 // 🐦 Flutter imports:
+import 'package:flashcards/components/add_flashcard_dialog.dart';
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
@@ -33,22 +34,33 @@ class ActionsDialog extends StatelessWidget {
             child: const Text('Edit'),
             onPress: () {
               Navigator.of(context).pop();
-              // showDialogWithAnimations(
-              //   context,
-              //   AddFlashCardDialog(
-              //     editFlashCard: true,
-              //     flashCardForEdit: flashCard,
-              //   ),
-              // );
-              // showDialog(
-              //   context: context,
-              //   builder: (context) {
-              //     return AddFlashCardDialog(
-              //       editFlashCard: true,
-              //       flashCardForEdit: flashCard,
-              //     );
-              //   },
-              // );
+              showGeneralDialog(
+                barrierDismissible: true,
+                barrierLabel: 'Add Flashcard dialog',
+                context: context,
+                pageBuilder: (context, animation, secondaryAnimation) {
+                  return AddFlashCardDialog(
+                    editFlashCard: true,
+                    flashCardForEdit: flashCard,
+                  );
+                },
+                transitionBuilder:
+                    (context, animation, secondaryAnimation, child) {
+                  Tween<Offset> tween;
+
+                  if (animation.status == AnimationStatus.reverse) {
+                    tween = Tween(begin: const Offset(0, 1), end: Offset.zero);
+                  } else {
+                    tween = Tween(begin: const Offset(0, 1), end: Offset.zero);
+                  }
+
+                  return SlideTransition(
+                    position: tween.animate(animation),
+                    child: child,
+                  );
+                },
+                transitionDuration: const Duration(milliseconds: 400),
+              );
             },
           ),
           IconTextButton(

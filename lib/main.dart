@@ -1,5 +1,6 @@
 // 🐦 Flutter imports:
 import 'package:flashcards/models/flashcard.dart';
+import 'package:flashcards/notifiers/flashcard_details.dart';
 import 'package:flashcards/notifiers/flashcards_animatedlist_key.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +20,7 @@ import 'package:flashcards/pages/about_page.dart';
 import 'package:flashcards/pages/flashcards_page.dart';
 import 'package:flashcards/pages/settings_page.dart';
 import 'package:flashcards/types.dart';
+import 'utils.dart';
 
 void main() async {
   await Hive.initFlutter('flashcards_dir');
@@ -48,6 +50,7 @@ class MyApp extends StatelessWidget {
               FlashCardsListProvider(FlashCardsRepository.getFlashCards()),
         ),
         ChangeNotifierProvider(create: (_) => FlashCardTypeNotifier()),
+        ChangeNotifierProvider(create: (_) => FlashCardDetailsNotifier()),
       ],
       child: AdaptiveTheme(
         light: ThemeData(
@@ -98,10 +101,10 @@ class _MyHomePageState extends State<MyHomePage> {
         Provider.of<FlashCardsListProvider>(context, listen: false);
   }
 
-  void _showAddFlashCardDialog() {
+  void _showAddFlashCardDialog() async {
     if (kDebugMode && flashCardsListProvider.flashCards.isEmpty) {
       flashCardsListProvider.add(FlashCard(
-        timeOfCreation: "2024-04-16T19:46:03.908",
+        timeOfCreation: "2026-04-16T19:46:03.908",
         frontText: "Easy",
         backText: "easy",
         difficulty: Difficulty.easy,
@@ -121,14 +124,6 @@ class _MyHomePageState extends State<MyHomePage> {
         frontText: "Hard",
         backText: "hard",
         difficulty: Difficulty.hard,
-        type: CardType.qa,
-        tags: [],
-      ));
-      flashCardsListProvider.add(FlashCard(
-        timeOfCreation: "2024-04-16T19:46:21.471",
-        frontText: "Easy (but without answer i.e. backText)",
-        backText: null,
-        difficulty: Difficulty.easy,
         type: CardType.qa,
         tags: [],
       ));
@@ -165,7 +160,10 @@ class _MyHomePageState extends State<MyHomePage> {
         );
       },
       transitionDuration: const Duration(milliseconds: 400),
-    );
+    ).then((value) => {
+          if (value == null) {clearFlashCardDetails(context)}
+        });
+    clearFlashCardDetails(context);
   }
 
   @override
