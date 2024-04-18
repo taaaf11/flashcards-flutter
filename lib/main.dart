@@ -152,23 +152,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    AdaptiveThemeMode currentThemeMode = AdaptiveTheme.of(context).mode;
-
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
-        actions: [
-          IconButton(
-            icon: Icon(
-              currentThemeMode == AdaptiveThemeMode.light
-                  ? Icons.dark_mode
-                  : Icons.light_mode,
-            ),
-            onPressed: () => currentThemeMode == AdaptiveThemeMode.light
-                ? AdaptiveTheme.of(context).setDark()
-                : AdaptiveTheme.of(context).setLight(),
-          )
-        ],
       ),
       body: switch (_currentPage) {
         0 => const FlashCardsPage(),

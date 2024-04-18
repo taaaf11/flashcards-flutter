@@ -24,7 +24,7 @@ class _SettingsPageState extends State<SettingsPage> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           SizedBox(
-            width: 150,
+            width: 137,
             child: IconTextButton(
               icon: Icon(
                 currentThemeMode == AdaptiveThemeMode.light
@@ -43,7 +43,7 @@ class _SettingsPageState extends State<SettingsPage> {
                     : 'Light Mode',
               ),
             ),
-          )
+          ),
         ],
       ),
     );

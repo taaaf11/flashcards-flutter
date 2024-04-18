@@ -30,8 +30,11 @@ class _FlashCardsPageState extends State<FlashCardsPage> {
             itemBuilder: (context, index, animation) {
               return SizeTransition(
                 sizeFactor: animation,
-                child: FlashCardWidget(
-                  flashCard: flashCardsState.flashCards[index],
+                child: Container(
+                  padding: const EdgeInsets.only(bottom: 12),
+                  child: FlashCardWidget(
+                    flashCard: flashCardsState.flashCards[index],
+                  ),
                 ),
               );
             },
