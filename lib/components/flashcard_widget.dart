@@ -29,18 +29,36 @@ class FlashCardWidget extends StatelessWidget {
           hoverDuration: const Duration(milliseconds: 20),
           splashColor: Theme.of(context).splashColor.withOpacity(0.1),
           onTap: () {
-            showDialog(
+            showGeneralDialog(
               context: context,
-              builder: (context) {
-                return FlashCardInfoDialog(flashCard: flashCard);
+              barrierLabel: 'FlashCardInfo Dialog',
+              barrierDismissible: true,
+              pageBuilder: (_, animation, __) =>
+                  FlashCardInfoDialog(flashCard: flashCard),
+              transitionBuilder:
+                  (context, animation, secondaryAnimation, child) {
+                return AnimatedOpacity(
+                  opacity: animation.value,
+                  duration: const Duration(milliseconds: 8),
+                  child: child,
+                );
               },
             );
           },
           onLongPress: () {
-            showDialog(
+            showGeneralDialog(
               context: context,
-              builder: (context) {
-                return ActionsDialog(flashCard: flashCard);
+              barrierLabel: 'Actions Dialog',
+              barrierDismissible: true,
+              pageBuilder: (_, animation, __) =>
+                  ActionsDialog(flashCard: flashCard),
+              transitionBuilder:
+                  (context, animation, secondaryAnimation, child) {
+                return AnimatedOpacity(
+                  opacity: animation.value,
+                  duration: const Duration(milliseconds: 8),
+                  child: child,
+                );
               },
             );
           },

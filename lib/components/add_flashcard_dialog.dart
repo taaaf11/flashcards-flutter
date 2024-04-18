@@ -31,9 +31,7 @@ class _AddFlashCardDialogState extends State<AddFlashCardDialog> {
   late TextEditingController _backTextEditingController;
   late TextEditingController _frontTextEditingController;
   late TextEditingController _tagsTextEditingController;
-  Difficulty _difficultyLevel = Difficulty.easy; // easy
-
-  // CardType cardType = CardType.idea;
+  Difficulty _difficultyLevel = Difficulty.easy;
 
   @override
   void initState() {

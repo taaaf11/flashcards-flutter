@@ -142,11 +142,29 @@ class _MyHomePageState extends State<MyHomePage> {
       ));
       return;
     }
-    showDialog(
+
+    showGeneralDialog(
+      barrierDismissible: true,
+      barrierLabel: 'Add Flashcard dialog',
       context: context,
-      builder: (context) {
+      pageBuilder: (context, animation, secondaryAnimation) {
         return AddFlashCardDialog();
       },
+      transitionBuilder: (context, animation, secondaryAnimation, child) {
+        Tween<Offset> tween;
+
+        if (animation.status == AnimationStatus.reverse) {
+          tween = Tween(begin: const Offset(0, 1), end: Offset.zero);
+        } else {
+          tween = Tween(begin: const Offset(0, 1), end: Offset.zero);
+        }
+
+        return SlideTransition(
+          position: tween.animate(animation),
+          child: child,
+        );
+      },
+      transitionDuration: const Duration(milliseconds: 400),
     );
   }
 

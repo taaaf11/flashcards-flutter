@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 // 🌎 Project imports:
-import 'package:flashcards/components/add_flashcard_dialog.dart';
 import 'package:flashcards/models/flashcard.dart';
 import 'package:flashcards/notifiers/flashcards_notifier.dart';
 import 'icon_text_button.dart';
@@ -34,15 +33,22 @@ class ActionsDialog extends StatelessWidget {
             child: const Text('Edit'),
             onPress: () {
               Navigator.of(context).pop();
-              showDialog(
-                context: context,
-                builder: (context) {
-                  return AddFlashCardDialog(
-                    editFlashCard: true,
-                    flashCardForEdit: flashCard,
-                  );
-                },
-              );
+              // showDialogWithAnimations(
+              //   context,
+              //   AddFlashCardDialog(
+              //     editFlashCard: true,
+              //     flashCardForEdit: flashCard,
+              //   ),
+              // );
+              // showDialog(
+              //   context: context,
+              //   builder: (context) {
+              //     return AddFlashCardDialog(
+              //       editFlashCard: true,
+              //       flashCardForEdit: flashCard,
+              //     );
+              //   },
+              // );
             },
           ),
           IconTextButton(
