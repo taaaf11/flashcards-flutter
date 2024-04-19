@@ -42,7 +42,7 @@ Color getCardColor(context, flashCard) {
               : const Color(0xffcd5c5c);
       }
   }
-  throw Exception("Unknown type/idea ");
+  return Colors.transparent;
 }
 
 void clearFlashCardDetails(context) {
