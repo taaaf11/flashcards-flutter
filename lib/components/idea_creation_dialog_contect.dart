@@ -58,6 +58,8 @@ class _IdeaCreationFormState extends State<IdeaCreationForm> {
               width: 110,
               child: TextField(
                 controller: _frontTextEditingController,
+                keyboardType: TextInputType.multiline,
+                maxLines: null,
                 onChanged: (String value) {
                   Provider.of<FlashCardDetailsNotifier>(context, listen: false)
                       .frontText = value;

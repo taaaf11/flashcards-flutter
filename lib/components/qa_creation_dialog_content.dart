@@ -67,6 +67,8 @@ class _QACreationFormState extends State<QACreationForm> {
               width: 110,
               child: TextField(
                 controller: _frontTextEditingController,
+                keyboardType: TextInputType.multiline,
+                maxLines: null,
                 onChanged: (String value) {
                   Provider.of<FlashCardDetailsNotifier>(context, listen: false)
                       .frontText = value;
@@ -88,6 +90,8 @@ class _QACreationFormState extends State<QACreationForm> {
               width: 110,
               child: TextField(
                 controller: _backTextEditingController,
+                keyboardType: TextInputType.multiline,
+                maxLines: null,
                 onChanged: (String value) {
                   Provider.of<FlashCardDetailsNotifier>(context, listen: false)
                       .backText = value;
