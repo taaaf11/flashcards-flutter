@@ -32,7 +32,7 @@ class _AddFlashCardDialogState extends State<AddFlashCardDialog> {
   late TextEditingController _backTextEditingController;
   late TextEditingController _frontTextEditingController;
   late TextEditingController _tagsTextEditingController;
-  Set<CardType> cardType = {CardType.idea};
+  CardType cardType = CardType.idea;
 
   @override
   void initState() {
@@ -78,7 +78,7 @@ class _AddFlashCardDialogState extends State<AddFlashCardDialog> {
           children: [
             AnimatedSwitcher(
               duration: const Duration(milliseconds: 600),
-              child: cardType.first == CardType.qa
+              child: cardType == CardType.qa
                   ? const QACreationForm()
                   : const IdeaCreationForm(),
             ),
@@ -96,11 +96,11 @@ class _AddFlashCardDialogState extends State<AddFlashCardDialog> {
                   icon: Icon(Icons.question_mark_outlined),
                 )
               ],
-              selected: cardType,
+              selected: <CardType>{cardType},
               onSelectionChanged: (Set<CardType> newSelection) {
                 setState(
                   () {
-                    cardType = newSelection;
+                    cardType = newSelection.first;
                   },
                 );
               },
@@ -136,7 +136,7 @@ class _AddFlashCardDialogState extends State<AddFlashCardDialog> {
                   return;
                 }
 
-                if (cardType.first == CardType.qa && backText == '') {
+                if (cardType == CardType.qa && backText == '') {
                   Navigator.of(context).pop();
                   return;
                 }
@@ -151,9 +151,9 @@ class _AddFlashCardDialogState extends State<AddFlashCardDialog> {
                 FlashCard flashCard = FlashCard(
                   timeOfCreation: DateTime.now().toIso8601String(),
                   frontText: frontText,
-                  backText: cardType.first == CardType.qa ? backText : null,
+                  backText: cardType == CardType.qa ? backText : null,
                   difficulty: difficulty,
-                  type: cardType.first,
+                  type: cardType,
                   tags: tags,
                 );
 

@@ -1,4 +1,5 @@
 // 🐦 Flutter imports:
+import 'package:flashcards/types.dart';
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
@@ -114,7 +115,7 @@ class FlashCardWidget extends StatelessWidget {
                   ),
                 ),
                 Icon(
-                  flashCard.difficulty != null
+                  flashCard.type == CardType.qa
                       ? Icons.question_mark_rounded
                       : Icons.lightbulb_outline_rounded,
                   size: 20,
