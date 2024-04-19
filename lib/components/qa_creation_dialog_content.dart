@@ -122,11 +122,10 @@ class _QACreationFormState extends State<QACreationForm> {
                     };
                   });
                 },
-                value: (Provider.of<FlashCardDetailsNotifier>(context,
-                                listen: false)
-                            .difficulty
-                            ?.index ??
-                        0) +
+                value: Provider.of<FlashCardDetailsNotifier>(context,
+                            listen: false)
+                        .difficulty
+                        .index +
                     1,
                 min: 1,
                 max: 3,
@@ -135,8 +134,7 @@ class _QACreationFormState extends State<QACreationForm> {
                     .difficulty) {
                   Difficulty.easy => 'Easy',
                   Difficulty.medium => 'Medium',
-                  Difficulty.hard => 'Hard',
-                  null => 'Easy'
+                  Difficulty.hard => 'Hard'
                 },
                 divisions: 2,
               ),

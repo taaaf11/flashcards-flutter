@@ -8,7 +8,7 @@ class FlashCardDetailsNotifier with ChangeNotifier {
   String? frontText;
   String? backText;
   String? tags;
-  Difficulty? difficulty;
+  Difficulty difficulty = Difficulty.easy;
 
   FlashCardDetailsNotifier();
 }

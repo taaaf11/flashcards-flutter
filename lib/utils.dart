@@ -41,8 +41,6 @@ Color getCardColor(context, flashCard) {
               ? Colors.red.withAlpha(125)
               : const Color(0xffcd5c5c);
       }
-    default:
-      return const Color(0xffffef00).withAlpha(180);
   }
   throw Exception("Unknown type/idea ");
 }
@@ -52,5 +50,5 @@ void clearFlashCardDetails(context) {
   Provider.of<FlashCardDetailsNotifier>(context, listen: false).backText = '';
   Provider.of<FlashCardDetailsNotifier>(context, listen: false).tags = '';
   Provider.of<FlashCardDetailsNotifier>(context, listen: false).difficulty =
-      null;
+      Difficulty.easy;
 }
