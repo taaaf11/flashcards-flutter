@@ -1,6 +1,11 @@
-import 'package:flashcards/notifiers/flashcard_details.dart';
+// 🐦 Flutter imports:
 import 'package:flutter/material.dart';
+
+// 📦 Package imports:
 import 'package:provider/provider.dart';
+
+// 🌎 Project imports:
+import 'package:flashcards/notifiers/flashcard_details.dart';
 
 class IdeaCreationForm extends StatefulWidget {
   const IdeaCreationForm({super.key});

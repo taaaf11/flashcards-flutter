@@ -1,5 +1,4 @@
 // 🐦 Flutter imports:
-import 'package:flashcards/notifiers/flashcards_animatedlist_key.dart';
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
@@ -7,6 +6,7 @@ import 'package:provider/provider.dart';
 
 // 🌎 Project imports:
 import 'package:flashcards/components/flashcard_widget.dart';
+import 'package:flashcards/notifiers/flashcards_animatedlist_key.dart';
 import 'package:flashcards/notifiers/flashcards_notifier.dart';
 
 class FlashCardsPage extends StatefulWidget {

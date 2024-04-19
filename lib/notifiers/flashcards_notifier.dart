@@ -1,11 +1,11 @@
 // 🐦 Flutter imports:
-import 'package:flashcards/components/flashcard_widget.dart';
-import 'package:flashcards/notifiers/flashcards_animatedlist_key.dart';
 import 'package:flutter/material.dart';
 
 // 🌎 Project imports:
+import 'package:flashcards/components/flashcard_widget.dart';
 import 'package:flashcards/flashcard_repository/flashcards_repository.dart';
 import 'package:flashcards/models/flashcard.dart';
+import 'package:flashcards/notifiers/flashcards_animatedlist_key.dart';
 
 class FlashCardsListProvider with ChangeNotifier {
   late List<FlashCard> _flashCards;

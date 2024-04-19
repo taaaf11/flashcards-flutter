@@ -1,14 +1,14 @@
 // 🐦 Flutter imports:
-import 'package:flashcards/components/idea_creation_dialog_contect.dart';
-import 'package:flashcards/components/qa_creation_dialog_content.dart';
-import 'package:flashcards/notifiers/flashcard_details.dart';
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
 import 'package:provider/provider.dart';
 
 // 🌎 Project imports:
+import 'package:flashcards/components/idea_creation_dialog_contect.dart';
+import 'package:flashcards/components/qa_creation_dialog_content.dart';
 import 'package:flashcards/models/flashcard.dart';
+import 'package:flashcards/notifiers/flashcard_details.dart';
 import 'package:flashcards/notifiers/flashcards_notifier.dart';
 import 'package:flashcards/types.dart';
 import 'package:flashcards/utils.dart';

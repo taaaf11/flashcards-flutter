@@ -1,8 +1,12 @@
+// 🐦 Flutter imports:
+import 'package:flutter/material.dart';
+
+// 📦 Package imports:
+import 'package:provider/provider.dart';
+
+// 🌎 Project imports:
 import 'package:flashcards/notifiers/flashcard_details.dart';
 import 'package:flashcards/types.dart';
-
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class QACreationForm extends StatefulWidget {
   const QACreationForm({super.key});

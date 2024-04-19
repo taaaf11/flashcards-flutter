@@ -1,7 +1,4 @@
 // 🐦 Flutter imports:
-import 'package:flashcards/models/flashcard.dart';
-import 'package:flashcards/notifiers/flashcard_details.dart';
-import 'package:flashcards/notifiers/flashcards_animatedlist_key.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -14,6 +11,9 @@ import 'package:provider/provider.dart';
 import 'package:flashcards/components/add_flashcard_dialog.dart';
 import 'package:flashcards/constants.dart';
 import 'package:flashcards/flashcard_repository/flashcards_repository.dart';
+import 'package:flashcards/models/flashcard.dart';
+import 'package:flashcards/notifiers/flashcard_details.dart';
+import 'package:flashcards/notifiers/flashcards_animatedlist_key.dart';
 import 'package:flashcards/notifiers/flashcards_notifier.dart';
 import 'package:flashcards/pages/about_page.dart';
 import 'package:flashcards/pages/flashcards_page.dart';
