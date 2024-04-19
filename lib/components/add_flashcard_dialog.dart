@@ -9,7 +9,6 @@ import 'package:provider/provider.dart';
 
 // 🌎 Project imports:
 import 'package:flashcards/models/flashcard.dart';
-import 'package:flashcards/notifiers/flashcard_type_notifier.dart';
 import 'package:flashcards/notifiers/flashcards_notifier.dart';
 import 'package:flashcards/types.dart';
 import 'package:flashcards/utils.dart';
@@ -34,8 +33,6 @@ class _AddFlashCardDialogState extends State<AddFlashCardDialog> {
   late TextEditingController _frontTextEditingController;
   late TextEditingController _tagsTextEditingController;
   Set<CardType> cardType = {CardType.idea};
-  // ignore: prefer_final_fields
-  // Difficulty _difficultyLevel = Difficulty.easy;
 
   @override
   void initState() {
@@ -72,7 +69,6 @@ class _AddFlashCardDialogState extends State<AddFlashCardDialog> {
   @override
   Widget build(BuildContext context) {
     var flashCardsListState = Provider.of<FlashCardsListProvider>(context);
-    var flashCardTypeState = Provider.of<FlashCardTypeNotifier>(context);
 
     return AlertDialog(
       content: AnimatedSize(
@@ -82,13 +78,9 @@ class _AddFlashCardDialogState extends State<AddFlashCardDialog> {
           children: [
             AnimatedSwitcher(
               duration: const Duration(milliseconds: 600),
-              child: Consumer(
-                builder: ((context, FlashCardTypeNotifier value, child) {
-                  return cardType.first == CardType.qa
-                      ? const QACreationForm()
-                      : const IdeaCreationForm();
-                }),
-              ),
+              child: cardType.first == CardType.qa
+                  ? const QACreationForm()
+                  : const IdeaCreationForm(),
             ),
             const SizedBox(height: 20),
             SegmentedButton<CardType>(
@@ -144,8 +136,7 @@ class _AddFlashCardDialogState extends State<AddFlashCardDialog> {
                   return;
                 }
 
-                if (flashCardTypeState.selection == CardType.qa &&
-                    backText == '') {
+                if (cardType.first == CardType.qa && backText == '') {
                   Navigator.of(context).pop();
                   return;
                 }
@@ -160,14 +151,9 @@ class _AddFlashCardDialogState extends State<AddFlashCardDialog> {
                 FlashCard flashCard = FlashCard(
                   timeOfCreation: DateTime.now().toIso8601String(),
                   frontText: frontText,
-                  backText: flashCardTypeState.selection == CardType.qa
-                      ? backText
-                      : null,
-                  // difficulty: Provider.of<FlashCardDetailsNotifier>(context,
-                  //         listen: false)
-                  //     .difficulty,
+                  backText: cardType.first == CardType.qa ? backText : null,
                   difficulty: difficulty,
-                  type: flashCardTypeState.selection,
+                  type: cardType.first,
                   tags: tags,
                 );
 

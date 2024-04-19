@@ -15,7 +15,6 @@ class _QACreationFormState extends State<QACreationForm> {
   late TextEditingController _frontTextEditingController;
   late TextEditingController _backTextEditingController;
   late TextEditingController _tagsTextEditingController;
-  Difficulty _difficultyLevel = Difficulty.easy;
 
   @override
   void initState() {
@@ -127,10 +126,13 @@ class _QACreationFormState extends State<QACreationForm> {
                     1,
                 min: 1,
                 max: 3,
-                label: switch (_difficultyLevel) {
+                label: switch (Provider.of<FlashCardDetailsNotifier>(context,
+                        listen: false)
+                    .difficulty) {
                   Difficulty.easy => 'Easy',
                   Difficulty.medium => 'Medium',
                   Difficulty.hard => 'Hard',
+                  null => 'Easy'
                 },
                 divisions: 2,
               ),
