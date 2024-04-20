@@ -1,5 +1,4 @@
 // 🐦 Flutter imports:
-import 'package:flashcards/types.dart';
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
@@ -9,6 +8,7 @@ import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:flashcards/components/actions_dialog.dart';
 import 'package:flashcards/components/flashcard_info_dialog.dart';
 import 'package:flashcards/models/flashcard.dart';
+import 'package:flashcards/types.dart';
 import 'package:flashcards/utils.dart';
 
 class FlashCardWidget extends StatelessWidget {

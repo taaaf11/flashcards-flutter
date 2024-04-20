@@ -5,11 +5,19 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 // 🌎 Project imports:
+import 'package:flashcards/models/flashcard.dart';
 import 'package:flashcards/notifiers/flashcard_details.dart';
 import 'package:flashcards/types.dart';
 
 class QACreationForm extends StatefulWidget {
-  const QACreationForm({super.key});
+  final bool editFlashCard;
+  final FlashCard? flashCardForEdit;
+
+  const QACreationForm({
+    super.key,
+    this.editFlashCard = false,
+    this.flashCardForEdit,
+  });
 
   @override
   State<QACreationForm> createState() => _QACreationFormState();
@@ -22,22 +30,29 @@ class _QACreationFormState extends State<QACreationForm> {
 
   @override
   void initState() {
-    _frontTextEditingController = TextEditingController();
-    _backTextEditingController = TextEditingController();
-    _tagsTextEditingController = TextEditingController();
+    if (widget.editFlashCard) {
+      assert(widget.flashCardForEdit != null,
+          'Flashcard is not provided for editing.');
 
-    _frontTextEditingController.text =
-        Provider.of<FlashCardDetailsNotifier>(context, listen: false)
-                .frontText ??
-            '';
-    _backTextEditingController.text =
-        Provider.of<FlashCardDetailsNotifier>(context, listen: false)
-                .backText ??
-            '';
+      Provider.of<FlashCardDetailsNotifier>(context, listen: false).backText =
+          widget.flashCardForEdit!.backText ?? '';
+      Provider.of<FlashCardDetailsNotifier>(context, listen: false).frontText =
+          widget.flashCardForEdit!.frontText;
+      Provider.of<FlashCardDetailsNotifier>(context, listen: false).tags =
+          widget.flashCardForEdit!.tags.join(',');
+      Provider.of<FlashCardDetailsNotifier>(context, listen: false).difficulty =
+          widget.flashCardForEdit!.difficulty ?? Difficulty.easy;
+    }
 
-    _tagsTextEditingController.text =
-        Provider.of<FlashCardDetailsNotifier>(context, listen: false).tags ??
-            '';
+    _frontTextEditingController = TextEditingController(
+        text: Provider.of<FlashCardDetailsNotifier>(context, listen: false)
+            .frontText);
+    _backTextEditingController = TextEditingController(
+        text: Provider.of<FlashCardDetailsNotifier>(context, listen: false)
+            .backText);
+    _tagsTextEditingController = TextEditingController(
+        text:
+            Provider.of<FlashCardDetailsNotifier>(context, listen: false).tags);
 
     super.initState();
   }

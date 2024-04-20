@@ -29,41 +29,16 @@ class AddFlashCardDialog extends StatefulWidget {
 }
 
 class _AddFlashCardDialogState extends State<AddFlashCardDialog> {
-  late TextEditingController _backTextEditingController;
-  late TextEditingController _frontTextEditingController;
-  late TextEditingController _tagsTextEditingController;
   CardType cardType = CardType.idea;
 
   @override
   void initState() {
-    _backTextEditingController = TextEditingController();
-    _frontTextEditingController = TextEditingController();
-    _tagsTextEditingController = TextEditingController();
-
     if (widget.editFlashCard) {
-      assert(widget.flashCardForEdit != null,
-          'Flashcard is not provided for editing.');
-
-      Provider.of<FlashCardDetailsNotifier>(context, listen: false).backText =
-          widget.flashCardForEdit!.backText ?? '';
-      Provider.of<FlashCardDetailsNotifier>(context, listen: false).frontText =
-          widget.flashCardForEdit!.frontText;
-      Provider.of<FlashCardDetailsNotifier>(context, listen: false).tags =
-          widget.flashCardForEdit!.tags.join(',');
-      Provider.of<FlashCardDetailsNotifier>(context, listen: false).difficulty =
-          widget.flashCardForEdit!.difficulty ?? Difficulty.easy;
+      assert(widget.flashCardForEdit != null);
+      cardType = widget.flashCardForEdit!.type;
     }
 
     super.initState();
-  }
-
-  @override
-  void dispose() {
-    _backTextEditingController.dispose();
-    _frontTextEditingController.dispose();
-    _tagsTextEditingController.dispose();
-
-    super.dispose();
   }
 
   @override
@@ -79,8 +54,14 @@ class _AddFlashCardDialogState extends State<AddFlashCardDialog> {
             AnimatedSwitcher(
               duration: const Duration(milliseconds: 600),
               child: cardType == CardType.qa
-                  ? const QACreationForm()
-                  : const IdeaCreationForm(),
+                  ? QACreationForm(
+                      editFlashCard: widget.editFlashCard,
+                      flashCardForEdit: widget.flashCardForEdit,
+                    )
+                  : IdeaCreationForm(
+                      editFlashCard: widget.editFlashCard,
+                      flashCardForEdit: widget.flashCardForEdit,
+                    ),
             ),
             const SizedBox(height: 20),
             SegmentedButton<CardType>(
@@ -158,8 +139,7 @@ class _AddFlashCardDialogState extends State<AddFlashCardDialog> {
                 );
 
                 if (widget.editFlashCard) {
-                  flashCardsListState.insert(
-                      removedIndex!, widget.flashCardForEdit!);
+                  flashCardsListState.insert(removedIndex!, flashCard);
                 } else {
                   flashCardsListState.add(flashCard);
                 }

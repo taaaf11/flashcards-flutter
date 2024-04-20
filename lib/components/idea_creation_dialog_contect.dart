@@ -5,10 +5,18 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 // 🌎 Project imports:
+import 'package:flashcards/models/flashcard.dart';
 import 'package:flashcards/notifiers/flashcard_details.dart';
 
 class IdeaCreationForm extends StatefulWidget {
-  const IdeaCreationForm({super.key});
+  final bool editFlashCard;
+  final FlashCard? flashCardForEdit;
+
+  const IdeaCreationForm({
+    super.key,
+    this.editFlashCard = false,
+    this.flashCardForEdit,
+  });
 
   @override
   State<IdeaCreationForm> createState() => _IdeaCreationFormState();
@@ -20,16 +28,22 @@ class _IdeaCreationFormState extends State<IdeaCreationForm> {
 
   @override
   void initState() {
-    _frontTextEditingController = TextEditingController();
-    _tagsTextEditingController = TextEditingController();
+    if (widget.editFlashCard) {
+      assert(widget.flashCardForEdit != null,
+          'Flashcard is not provided for editing.');
 
-    _frontTextEditingController.text =
-        Provider.of<FlashCardDetailsNotifier>(context, listen: false)
-                .frontText ??
-            '';
-    _tagsTextEditingController.text =
-        Provider.of<FlashCardDetailsNotifier>(context, listen: false).tags ??
-            '';
+      Provider.of<FlashCardDetailsNotifier>(context, listen: false).frontText =
+          widget.flashCardForEdit!.frontText;
+      Provider.of<FlashCardDetailsNotifier>(context, listen: false).tags =
+          widget.flashCardForEdit!.tags.join(',');
+    }
+
+    _frontTextEditingController = TextEditingController(
+        text: Provider.of<FlashCardDetailsNotifier>(context, listen: false)
+            .frontText);
+    _tagsTextEditingController = TextEditingController(
+        text:
+            Provider.of<FlashCardDetailsNotifier>(context, listen: false).tags);
 
     super.initState();
   }
