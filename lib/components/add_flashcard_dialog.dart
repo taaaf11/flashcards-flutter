@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 // 🌎 Project imports:
-import 'package:flashcards/components/idea_creation_dialog_contect.dart';
-import 'package:flashcards/components/qa_creation_dialog_content.dart';
+import 'package:flashcards/components/idea_creation_form.dart';
+import 'package:flashcards/components/qa_creation_form.dart';
 import 'package:flashcards/models/flashcard.dart';
 import 'package:flashcards/notifiers/flashcard_details.dart';
 import 'package:flashcards/notifiers/flashcards_notifier.dart';
